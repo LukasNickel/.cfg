@@ -1,0 +1,9 @@
+[user]
+	name = Lukas Nickel
+	email = lukas.nickel@tu-dortmund.de
+[rebase]
+	stat = true
+[merge]
+	conflictstyle = diff3
+[core]
+	editor = nvim
