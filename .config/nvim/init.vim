@@ -32,6 +32,7 @@ filetype plugin indent on
 syntax on
 
 call plug#begin('~/.local/share/nvim/site/plugged')
+    Plug 'itchyny/lightline.vim'                       " Lightline statusbar
     Plug 'vimwiki/vimwiki'
     Plug 'nvie/vim-flake8'
     Plug 'Vimjas/vim-python-pep8-indent'
