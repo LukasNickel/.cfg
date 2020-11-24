@@ -172,8 +172,9 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano -w PKGBUILD'
 alias more=less
-alias ll="ls -l"
+#alias ll="ls -l"
 alias vim="nvim"
+alias vimdiff="nvim -d"
 
 # youtube-dl
 alias yta-aac="youtube-dl --extract-audio --audio-format aac "
@@ -197,7 +198,7 @@ alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
 
 
-
-
-
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# Make gammapy data locatable
+export GAMMAPY_DATA=$Home/git_repos/gammapy-tutorials/datasets/
