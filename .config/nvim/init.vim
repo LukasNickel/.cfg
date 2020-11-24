@@ -11,11 +11,13 @@ set shiftwidth=4
 set smartindent " use smart auto indent
 set number " show line numbers
 set relativenumber
-set cc=80
+"set cc=80
 set scrolloff=2 " 2 lines above/below cursor when scrolling
 set showmode " show mode in status bar
 set ruler " show cursor position in status bar 
 set hidden " remember undo after quitting
+" enable copying to clipboard using ctrl c
+vnoremap <C-C> :w !xclip -i -sel c<CR><CR>
 
 " Wildmenu completion {{{
 set wildmenu
@@ -55,4 +57,6 @@ autocmd BufWritePost *.py call Flake8()
 
 let g:vimwiki_list = [{'path':'~/vimwiki/public', 'auto_tags': 1}, {'path': '~/vimwiki'}, {'path':'~/vimwiki/personal'}]
 
-
+setlocal spell
+set spelllang=de,en_gb
+inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
