@@ -163,5 +163,5 @@ alias l.='exa -a | egrep "^\."'
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Make gammapy data locatable
-export GAMMAPY_DATA=$Home/git_repos/gammapy-tutorials/datasets/
+export GAMMAPY_DATA=$HOME/git_repos/gammapy-tutorials/datasets/
 
