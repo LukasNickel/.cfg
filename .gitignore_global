@@ -1,0 +1,6 @@
+*.swp
+__pycache__
+.idea
+tags
+tags.lock
+tags.temp
