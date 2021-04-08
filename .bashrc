@@ -149,9 +149,8 @@ else
 fi
 unset __conda_setup
 
-conda activate cta
-# <<< conda initialize <<<
-
+# python
+alias pytest='pytest -v --lf'
 
 # texlive setup
 export PATH="$HOME/.local/texlive/2020/bin/x86_64-linux:$PATH"
@@ -197,6 +196,8 @@ alias ll='exa -l --color=always --group-directories-first'  # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
 
+# sane grep defaults
+alias grep='grep -rni'
 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 

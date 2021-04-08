@@ -113,7 +113,8 @@ else
 fi
 unset __conda_setup
 
-conda activate cta
+# python
+alias pytest='pytest -v --lf'
 
 
 # texlive setup
@@ -159,7 +160,11 @@ alias ll='exa -l --color=always --group-directories-first'  # long format
 alias lt='exa -aT --color=always --group-directories-first' # tree listing
 alias l.='exa -a | egrep "^\."'
 
+# sane grep defaults
+alias grep='grep -rni'
 
+
+# magic to control config files in git 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Make gammapy data locatable
