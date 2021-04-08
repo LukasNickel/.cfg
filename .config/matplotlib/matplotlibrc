@@ -1,5 +1,5 @@
 #### Backend
-backend: agg
+#backend: agg
 
 #### LINES
 lines.linewidth   : 2.0
@@ -17,7 +17,7 @@ font.family: serif
 font.size: 14
 
 #### TEXT
-text.usetex : True
+text.usetex : False
 
 #### AXES
 axes.spines.top    : False
@@ -40,7 +40,7 @@ legend.fontsize: medium
 
 #### FIGURE
 figure.figsize: 8, 6
-figure.dpi: 200
+figure.dpi: 150
 figure.autolayout: True
 
 #### IMAGES
