@@ -60,3 +60,7 @@ let g:vimwiki_list = [{'path':'~/vimwiki/public', 'auto_tags': 1}, {'path': '~/v
 setlocal spell
 set spelllang=de,en_gb
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+
+
+" neat pdf export https://askubuntu.com/questions/705973/how-can-i-print-from-vim-to-pdf
+command! -range=% PDF <line1>,<line2> hardcopy > %.ps | !ps2pdf %.ps && rm %.ps && echo 'Created: %.pdf'
