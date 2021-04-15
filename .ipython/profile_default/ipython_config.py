@@ -630,5 +630,10 @@ c.Completer.backslash_combining_completions = True
 c.InteractiveShellApp.exec_lines = [
     'import numpy as np\n'
     'import astropy.units as u\n'
-    'import matplotlib as plt\n'
+    'import astropy.constants as c\n'
+    'from astropy.visualization import quantity_support\n'
+    'quantity_support()\n'
+    'from astropy.visualization import time_support\n'
+    'time_support()\n'
+    'import matplotlib.pyplot as plt\n'
 ]
