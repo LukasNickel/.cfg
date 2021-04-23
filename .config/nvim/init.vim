@@ -55,7 +55,11 @@ call plug#end()
 
 autocmd BufWritePost *.py call Flake8()
 
-let g:vimwiki_list = [{'path':'~/vimwiki/public', 'auto_tags': 1}, {'path': '~/vimwiki'}, {'path':'~/vimwiki/personal'}]
+let g:vimwiki_list = [
+ \ {'path':'~/vimwiki/public', 'auto_tags': 1},
+ \ {'path': '~/vimwiki'},
+ \ {'path':'~/vimwiki/personal'},
+ \ {'path':'~/Documents/university/promotion/lectures/ss21/astro/', 'auto_tags': 1,}]
 
 setlocal spell
 set spelllang=de,en_gb
