@@ -69,9 +69,9 @@ let g:vimwiki_list = [
  \ {'path':'~/vimwiki/personal'},
  \ {'path':'~/Documents/university/promotion/lectures/ss21/astro/', 'auto_tags': 1,}]
 
-setlocal spell
-set spelllang=de,en_gb
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
+set spell
+set spelllang=de,en_gb,en_us
+inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 
 " neat pdf export https://askubuntu.com/questions/705973/how-can-i-print-from-vim-to-pdf
