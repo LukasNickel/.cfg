@@ -30,6 +30,13 @@ set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,*.xc*,*.pbxproj,*.xcodeproj/**,*.
 set wildignore+=*.js.map,ui/public/client/*,cassettes/**,node_modules/**
 " }}}
 
+" Faster buffer switching
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-l> <C-W>l
+nnoremap <C-h> <C-W>h
+
+
 filetype plugin indent on
 syntax on
 
