@@ -89,7 +89,7 @@ function! LastModified()
     let save_cursor = getpos(".")
     let n = min([20, line("$")])
     keepjumps exe '1,' . n . 's#^\(.\{,10}Last modified: \).*#\1' .
-              \ strftime('%Y-%M-%d') . '#e'
+              \ strftime('%Y-%m-%d') . '#e'
     call histdel('search', -1)
     call setpos('.', save_cursor)
   endif
