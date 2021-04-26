@@ -46,6 +46,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'nvie/vim-flake8'
     Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'tpope/vim-fugitive'
+    Plug 'jremmen/vim-ripgrep'
     Plug 'sirver/ultisnips'
         let g:UltiSnipsExpandTrigger = '<tab>'
         let g:UltiSnipsJumpForwardTrigger = '<tab>'
