@@ -43,10 +43,13 @@ syntax on
 call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'itchyny/lightline.vim'                       " Lightline statusbar
     Plug 'vimwiki/vimwiki'
-    Plug 'nvie/vim-flake8'
     Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'tpope/vim-fugitive'
     Plug 'jremmen/vim-ripgrep'
+    Plug 'dense-analysis/ale'
+        let g:ale_fixers = {'python': ['black']}
+        let g:ale_completion_enabled = 1
+        let g:ale_completion_autoimport = 1
     Plug 'sirver/ultisnips'
         let g:UltiSnipsExpandTrigger = '<tab>'
         let g:UltiSnipsJumpForwardTrigger = '<tab>'
@@ -61,7 +64,6 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
 call plug#end()
 
-autocmd BufWritePost *.py call Flake8()
 
 let g:vimwiki_list = [
  \ {'path':'~/vimwiki/public', 'auto_tags': 1},
