@@ -118,7 +118,7 @@ alias pytest='pytest -v --lf'
 
 
 # texlive setup
-export PATH="$HOME/.local/texlive/2020/bin/x86_64-linux:$PATH"
+export PATH="$HOME/.local/texlive/2021/bin/x86_64-linux:$PATH"
 
 export CLASS=${HOME}/lukas/Documents/university/software/class_public
 
@@ -138,6 +138,7 @@ alias np='nano -w PKGBUILD'
 alias more=less
 alias ll="ls -l"
 alias vim="nvim"
+alias du="du -h"
 
 # youtube-dl
 alias yta-aac="youtube-dl --extract-audio --audio-format aac "
