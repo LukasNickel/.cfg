@@ -56,7 +56,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
         let g:UltiSnipsSnippetDirectories=["~/UltiSnips"]
     Plug 'lervag/vimtex'
-        let g:tex_flavor='latex'
+        let g:tex_flavor='lualatex'
         let g:vimtex_view_method='zathura'
         let g:vimtex_quickfix_mode=0
         set conceallevel=2
