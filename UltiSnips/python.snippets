@@ -1,3 +1,18 @@
+# general python things
+
+snippet for "for loop" b
+for ${1:item} in ${2:iterable}:
+	${3:${VISUAL:pass}}
+endsnippet
+
+
+snippet ifmain "ifmain" b
+if __name__ == "__main__":
+	${1:${VISUAL:main()}}
+endsnippet
+
+
+# some imports
 snippet cta
 ctapipe
 endsnippet
@@ -6,7 +21,10 @@ snippet numpy
 import numpy as np
 endsnippet
 
-
 snippet pyplot
-import matpllotlib.pyplot as plt
+import matplotlib.pyplot as plt
+endsnippet
+
+snippet units
+import astropy.units as u
 endsnippet
