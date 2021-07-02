@@ -19,6 +19,12 @@ set hidden " remember undo after quitting
 " enable copying to clipboard using ctrl c
 vnoremap <C-C> :w !xclip -i -sel c<CR><CR>
 
+" less flashy colors for git merges
+if &diff
+    colorscheme evening
+endif
+
+
 " Wildmenu completion {{{
 set wildmenu
 set wildmode=list:longest,full
@@ -62,6 +68,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         set conceallevel=2
         let g:tex_conceal='abdmg'
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
+"    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 
