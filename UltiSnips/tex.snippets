@@ -26,6 +26,16 @@ snippet template "Basic template" b
 \end{document}
 endsnippet
 
+snippet header "Input the header" b
+\input{header.tex}
+endsnippet
+
+snippet feynman "Enviroment for feynman figures" b
+\feynmandiagram [$1] {
+	$2,
+};
+endsnippet
+
 snippet beg "begin{} / end{}" bA
 \\begin{$1}
 	$0
@@ -630,11 +640,6 @@ context "math()"
 snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
 endsnippet
-
-snippet letw "let omega" iA
-Let $\Omega \subset \C$ be open.
-endsnippet
-
 
 snippet HH "H" iA
 \mathbb{H}
