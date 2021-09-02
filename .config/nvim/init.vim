@@ -1,27 +1,73 @@
 set nocompatible
+filetype plugin indent on
+syntax on
+let mapleader = "-"
+
+
 set showmatch       " show matching brackets
 set ignorecase      " case insensitive search
 set smartcase       " sensitive search if using uppercases
+
+" TODO: what do I want to achieve here? 
 set mouse=v         " mouse in visual mode
+" only in gui?
+" for neovide
+" set mouse=nicr
+" set mouse=a         
+
+
 set hlsearch
+
+" tabs and indent
 set tabstop=4
 set softtabstop=4
 set expandtab
 set shiftwidth=4
 set smartindent " use smart auto indent
+
+
 set number " show line numbers
 set relativenumber
-"set cc=80
+" set cc=80
 set scrolloff=2 " 2 lines above/below cursor when scrolling
 set showmode " show mode in status bar
 set ruler " show cursor position in status bar 
-set hidden " remember undo after quitting
+
+
+" mappings
+" Its kinda reversed but w/e
+" Also not really reachable on a DE keyboard, which keys  do i want to use
+" instead?
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
+nnoremap <leader>{ viw<esc>a}<esc>bi{<esc>lel
+nnoremap <leader>[ viw<esc>a]<esc>bi[<esc>lel
+" This should be filetype sensitive
+nnoremap // 0i# <esc>
+:inoremap jk <esc>
+:inoremap <esc> <nop>
+:noremap <left> <nop>
+:noremap <right> <nop>
+:noremap <up> <nop>
+:noremap <down> <nop>
+:inoremap <left> <nop>
+:inoremap <right> <nop>
+:inoremap <up> <nop>
+:inoremap <down> <nop>
+
+
 " enable copying to clipboard using ctrl c
 vnoremap <C-C> :w !xclip -i -sel c<CR><CR>
 
+set nospell
+set spelllang=de,en_gb,en_us
+" inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
+
 " less flashy colors for git merges
 if &diff
-    colorscheme evening
+    colorscheme morning
+    syntax off
 endif
 
 
@@ -42,17 +88,16 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-l> <C-W>l
 nnoremap <C-h> <C-W>h
 
-
-filetype plugin indent on
-syntax on
-
 call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'itchyny/lightline.vim'                       " Lightline statusbar
     Plug 'vimwiki/vimwiki'
     Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'tpope/vim-fugitive'
     Plug 'jremmen/vim-ripgrep'
+    Plug 'JuliaEditorSupport/julia-vim'
+        let g:latex_to_unicode_file_types = ".*"
     Plug 'dense-analysis/ale'
+        let g:ale_linters = {'python': ['pyflakes']}
         let g:ale_fixers = {'python': ['black']}
         let g:ale_completion_enabled = 1
         let g:ale_completion_autoimport = 1
@@ -62,13 +107,13 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
         let g:UltiSnipsSnippetDirectories=["~/UltiSnips"]
     Plug 'lervag/vimtex'
-        let g:tex_flavor='lualatex'
         let g:vimtex_view_method='zathura'
         let g:vimtex_quickfix_mode=0
         set conceallevel=2
         let g:tex_conceal='abdmg'
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
-"    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        let g:coc_snippet_next = '<tab>'
 call plug#end()
 
 
@@ -78,9 +123,29 @@ let g:vimwiki_list = [
  \ {'path':'~/vimwiki/personal'},
  \ {'path':'~/Documents/university/promotion/lectures/ss21/astro/', 'auto_tags': 1,}]
 
-set spell
-set spelllang=de,en_gb,en_us
-inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
+let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr,svg,circle,rect,polygon,ellipse,path,polyline,pattern,marker,line,text,defs,linearGradient,stop'
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Toggle unicode expansion
+noremap <expr> <F7> LaTeXtoUnicode#Toggle()
+noremap! <expr> <F7> LaTeXtoUnicode#Toggle()
+
 
 
 " neat pdf export https://askubuntu.com/questions/705973/how-can-i-print-from-vim-to-pdf
@@ -104,4 +169,3 @@ function! LastModified()
   endif
 endfunction
 autocmd BufWritePre * call LastModified()
-
