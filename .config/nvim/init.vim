@@ -24,6 +24,7 @@ set softtabstop=4
 set expandtab
 set shiftwidth=4
 set smartindent " use smart auto indent
+set foldmethod=indent
 
 
 set number " show line numbers
@@ -113,7 +114,6 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         let g:tex_conceal='abdmg'
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        let g:coc_snippet_next = '<tab>'
 call plug#end()
 
 
@@ -136,16 +136,12 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
+nnoremap <leader>rn <Plug>(coc-rename)
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <leader>qf  <Plug>(coc-fix-current)
 
 " Toggle unicode expansion
-noremap <expr> <F7> LaTeXtoUnicode#Toggle()
-noremap! <expr> <F7> LaTeXtoUnicode#Toggle()
-
+nnoremap <expr> <F7> LaTeXtoUnicode#Toggle()
 
 
 " neat pdf export https://askubuntu.com/questions/705973/how-can-i-print-from-vim-to-pdf
@@ -169,3 +165,16 @@ function! LastModified()
   endif
 endfunction
 autocmd BufWritePre * call LastModified()
+
+" Clear highlighting on escape in normal mode
+nnoremap <esc> :noh<return><esc>
+nnoremap <esc>^[ <esc>^[
+
+" Remove trailing whitespace
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+command! TrimWhitespace call TrimWhitespace()
+
