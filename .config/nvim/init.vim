@@ -25,6 +25,7 @@ set expandtab
 set shiftwidth=4
 set smartindent " use smart auto indent
 set foldmethod=indent
+set foldlevelstart=2
 
 
 set number " show line numbers
