@@ -1,0 +1,11 @@
+app=gimp-2.10
+last_user=
+screenshot_dir=file:/home/lukas/Desktop
+action=2
+delay=0
+region=3
+show_mouse=0
+last_extension=png
+enable_imgur_upload=true
+show_border=1
+

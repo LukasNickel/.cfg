@@ -1,5 +1,5 @@
 favorites=org.manjaro.pamac.manager.desktop,chromium.desktop,clementine.desktop,firefox.desktop,gcolor2.desktop,gimp.desktop,steam.desktop,thunderbird.desktop,net.lutris.Lutris.desktop,xfce4-terminal.desktop,quiterss.desktop,balena-etcher-electron.desktop
-recent=thunar.desktop,org.keepassxc.KeePassXC.desktop,quiterss.desktop,firefox.desktop,thunderbird.desktop,libreoffice-base.desktop,clementine.desktop,xfce4-terminal.desktop,org.inkscape.Inkscape.desktop,chromium.desktop
+recent=thunar.desktop,quiterss.desktop,org.manjaro.pamac.manager.desktop,telegramdesktop.desktop,virtualbox.desktop,firefox.desktop,xterm.desktop,chromium.desktop,steam.desktop,clementine.desktop
 button-icon=/usr/share/icons/whiskermenu-manjaro.svg
 button-single-row=false
 show-button-title=false
