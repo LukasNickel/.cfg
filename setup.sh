@@ -116,24 +116,24 @@ install_fonts() {
 install_packages(){
 if [ -x "$(command -v apt-get)" ]
 then
-    sudo apt-get install --assume-yes $1
+    sudo apt-get install --assume-yes $@
 elif [ -x "$(command -v pacman)" ]
 then
-    sudo pacman -S --noconfirm  $1
+    sudo pacman -S --noconfirm  $@
 elif [ -x "$(command -v yum)" ]
 then
-    sudo yum install -y $1
+    sudo yum install -y $@
 elif [ -x "$(command -v dnf)" ]
 then
-    sudo dnf install -y $1
+    sudo dnf install -y $@
 elif [ -x "$(command -v emerge)" ]
 then
-    sudo emerge $1
+    sudo emerge $@
 elif [ -x "$(command -v zypper)" ]
 then
-    sudo zypper install -y $1
+    sudo zypper install -y $@
 else
-    echo "FAILED TO INSTALL PACKAGE: Package manager not found. You must manually install: $1">&2;
+    echo "FAILED TO INSTALL PACKAGE: Package manager not found. You must manually install: $@">&2;
 fi
 }
 
