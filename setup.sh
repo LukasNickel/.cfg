@@ -2,7 +2,7 @@
 common_minimal_packages='git make curl'
 common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura vlc telegram-desktop  i3lock i3status dunst rofi'
 manual_minimal_packages='code'
-manual_extra_packages='nextcloud-client i3-wm exa mattermost slack-desktop steam xournalpp'
+manual_extra_packages='nextcloud-client i3-wm exa mattermost slack-desktop steam xournalpp ttf-fira-code bat'
 conda_path=~/.local/anaconda3
 conda_link=https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 # why would i define this twice?
