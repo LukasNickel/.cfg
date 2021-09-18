@@ -5,10 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-
-
 function open () {
 	# raise an error if the argument does not exist and is not a link
 	if [[ "$1" != http*//* && "$1" != www.* && ! -a "$1" ]]; then
@@ -121,3 +117,7 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
