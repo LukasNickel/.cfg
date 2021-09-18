@@ -2,7 +2,7 @@
 common_minimal_packages='git make curl'
 common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura vlc telegram-desktop  i3lock i3status dunst rofi'
 manual_minimal_packages='code'
-manual_extra_packages='nextcloud-client i3-wm exa mattermost slack-desktop steam xournalpp ttf-fira-code bat'
+manual_extra_packages='nextcloud-client i3-wm exa mattermost slack-desktop steam xournalpp ttf-fira-code bat zsh-theme-powerlevel10k'
 conda_path=~/.local/anaconda3
 conda_link=https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 # why would i define this twice?
@@ -46,6 +46,7 @@ install_texlive() {
         case ${answer:0:1} in
             y|Y|yes|Yes|Ja|ja )
                 cd ~/.local
+                rm -r install-tl*
                 curl -L http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz | tar xz
                 env TEXLIVE_INSTALL_PREFIX=~/.local/texlive ./install-tl-*/install-tl
                 source ~/.bashrc
