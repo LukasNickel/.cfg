@@ -2,7 +2,7 @@
 common_minimal_packages='git make curl'
 common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura vlc telegram-desktop  i3lock i3status dunst rofi'
 manual_minimal_packages='code'
-manual_extra_packages='nextcloud-client i3-wm exa mattermost steam-manjaro xournalpp ttf-fira-code bat zsh-theme-powerlevel10k'
+manual_extra_packages='nextcloud-client nodejs i3-wm exa mattermost steam-manjaro xournalpp ttf-fira-code bat zsh-theme-powerlevel10k'
 conda_path=~/.local/anaconda3
 conda_link=https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 # why would i define this twice?
@@ -105,6 +105,8 @@ setup_configs() {
     # more minow things
     pip install neovim
     chsh -s /usr/bin/zsh
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     nvim +PluginInstall +qall
 }
 
