@@ -1,8 +1,8 @@
 # need to setup ssh first to copy the config repository
 common_minimal_packages='git make curl'
-common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura vlc telegram-desktop'
+common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura vlc telegram-desktop  i3lock i3status dunst rofi'
 manual_minimal_packages='code'
-manual_extra_packages='nextcloud-client i3-wm exa mattermost slack-desktop steam xournal'
+manual_extra_packages='nextcloud-client i3-wm exa mattermost slack-desktop steam xournalpp'
 conda_path=~/.local/anaconda3
 conda_link=https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 # why would i define this twice?
@@ -10,24 +10,13 @@ tex_path=~/.local/texlive
 TEXLIVE_INSTALL_PREFIX=~/.local/texlive
 config_url=git@github.com:LukasNickel/cfg.git
 
-# not needed anymore?
-#declare -A osInfo;
-#osInfo[/etc/debian_version]=apt-get
-#osInfo[/etc/arch-release]=pacman
-#osInfo[/etc/redhat-release]=yum
-#osInfo[/etc/fedora-release]=dnf
-#osInfo[/etc/gentoo-release]=emerge
-#osInfo[/etc/SuSE-release]=zypper
-
-#for f in ${!osInfo[@]}
-#do
-#    if [[ -f $f ]];then
-#        echo Detected package manager: ${osInfo[$f]}
-#    fi
-#done
 ToDo() {
-    echo "Install the manual packages"
-    echo "Login to stuff (messenger, thunderbird, firefox, ...)"
+    echo "
+    - Install the remaining manual packages if any
+    - Login to stuff (messenger, thunderbird, firefox, ...)
+    - Setup conda envs
+    - Test things (eg vim, coc was giving me a headache sometimes    
+"
 }
 
 install_conda() {
@@ -39,9 +28,11 @@ install_conda() {
         source $conda_path/bin/activate
         conda init
         source ~/.bashrc
+        conda update -y anaconda
         echo "Installing mamba via conda. Dont freak out if this takes some time"
         conda install -c conda-forge --yes mamba
         mamba install -c conda-forge --yes uncertainties
+        rm conda_installer.sh
     else
         echo "Anaconda is installed already, skipping this step."
     fi
@@ -114,7 +105,11 @@ setup_configs() {
     pip install neovim
     chsh -s /usr/bin/zsh
     nvim +PluginInstall +qall
-    echo "The conda installation might be messed up :/"
+}
+
+install_fonts() {
+    echo "Installing fonts"
+    echo "To be implemented"
 }
 
 install_packages(){
@@ -146,36 +141,53 @@ install_manually() {
     echo "The package(s) might not be available for all distributions or named differently"
 }
 
-echo "This script is meant to collect some common setup steps. You can perform the steps individually or all at once  \n"
-echo "- Best exectute this from the home folder, there might be some path assumptions left. I try to avoid it, but you know..."
-echo "- You will need a working internet connection and some steps will take a while, especially conda and TeXLive"
-echo "- Mamba will be installed in addition to conda to speed up the enviroment solving in the future. This is slow, dont panic"
-echo "- VSCode is not directly available in most distributions. On Arch its there, but I still skip the installation for now."
-echo "- The relevant toolbox settings end up in your ~/.bashrc. If you use a different shell, you need to copy them manually."
+echo "This script is meant to collect some common setup steps. You can perform the steps individually or all at once.
+
+DISCLAIMER:
+- I usually run Manjaro, most tests are done on it (with AUR) enabled.
+- For other distributions, some packages are not available (e.g. VSCode) and need to be installed by hand.
+- I did some tests on Ubuntu-based distribution. Everything else is largely untested, but should in theory work
+"
+
+echo "
+HOW TO USE THIS:
+- These should be the steps https://toolbox.pep-dortmund.org/install/linux.html
+- You will need a working internet connection and some steps will take a while, especially conda and TeXLive
+- It runs mostly without any intervention. Exceptions: Git setup and TeXLive installation.
+- Best execute this from the home folder, there might be some path assumptions left. I try to avoid it, but you know...
+- Mamba will be installed in addition to conda to speed up the enviroment solving in the future. This is slow, dont panic
+- VSCode is not directly available in most distributions (everything but arch?)
+- The relevant toolbox settings end up in your ~/.bashrc. If you use a different shell, you need to copy them manually.
+"
 echo""
 
 
 echo "What shall we do with our precious time?"
 echo "
-1: Toolbox workshop setup
-2: Packages only
+1: Toolbox workshop setup (2->3->4->5)
+2: Toolbox packages only
 3: Setup git
 4: Conda only (slow)
 5: TeXLive only (slooooooow)
 6: Add LaTeX-themes (only tested in combination with 4)
-7: My complete setup (Remember to copy your ssh keys and passwords first, future me. Equal to 9->4->5->6->8)
-8: My configs only (-> 7)
-9: My packages only (-> 7, remember to install the missing packages by hand!)
+7: My packages only (remember to install the missing packages by hand!)
+8: My configs only (-> 9)
+9: My complete setup (Remember to copy your ssh keys and passwords first, future me. Equal to 4->5->6->7->8)
 "
 
 read -p "Select the step to perform:" answer
 case ${answer:0:1} in
     1)
-        echo "Starting ..."
+        install_packages $common_minimal_packages
+        install_packages $manual_minimal_packages || install_manually $manual_minimal_packages
+        configure_git
+        install_conda
+        install_texlive
+        echo "Install VSCode if needed and install the latex extension"
         ;;
     2)
         install_packages $common_minimal_packages
-        install_manually $manual_minimal_packages
+        install_packages $manual_minimal_packages || install_manually $manual_minimal_packages
         ;;
     3)  
         configure_git
@@ -189,26 +201,28 @@ case ${answer:0:1} in
     6)  
         add_tex_themes
         ;;
-    7)  
+    7)
         install_packages $common_minimal_packages
         install_packages $common_extra_packages
         install_manually $manual_minimal_packages
         install_manually $manual_extra_packages
+        ;;     
+    8)  
+        setup_configs
+        ;;
+    9)  
+        install_packages $common_minimal_packages
+        install_packages $common_extra_packages
+        install_packages $manual_minimal_packages || install_manually $manual_minimal_packages
+        install_packages $manual_extra_packages || install_manually $manual_extra_packages
         install_conda
         install_texlive
         add_tex_themes
         setup_configs
-        ;;
-    8)  
-        setup_configs
-        ;;
-    9)
-        install_packages $common_minimal_packages
-        install_packages $common_extra_packages
-        install_manually $manual_minimal_packages
-        install_manually $manual_extra_packages
-        ;;       
+        ToDo
+        ;;  
     *)
+        echo "Invalid answer, exiting."
         exit 1
         ;;
 esac
