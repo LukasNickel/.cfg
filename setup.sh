@@ -2,7 +2,7 @@
 common_minimal_packages='git make curl'
 common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura vlc telegram-desktop  i3lock i3status dunst rofi'
 manual_minimal_packages='code'
-manual_extra_packages='nextcloud-client i3-wm exa mattermost slack-desktop steam xournalpp ttf-fira-code bat zsh-theme-powerlevel10k'
+manual_extra_packages='nextcloud-client i3-wm exa mattermost steam-manjaro xournalpp ttf-fira-code bat zsh-theme-powerlevel10k'
 conda_path=~/.local/anaconda3
 conda_link=https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 # why would i define this twice?
@@ -109,8 +109,15 @@ setup_configs() {
 }
 
 install_fonts() {
-    echo "Installing fonts"
-    echo "To be implemented"
+    echo "Installing TUDo fons from the e5 wiki"
+    echo "E5 user name:"
+    read user
+    echo "PW:"
+    read pw
+    curl -u $user:$pw https://wiki.e5.physik.tu-dortmund.de/pub/Main/TUFonts/TUDo_font_akkurat.zip -o TUDo_font_akkurat.zip
+    mkdir -p $HOME/.local/share/fonts
+    unzip TUDo_font_akkurat.zip -d $HOME/.local/share/fonts
+    rm TUDo_font_akkurat.zip
 }
 
 install_packages(){
@@ -172,8 +179,8 @@ echo "
 5: TeXLive only (slooooooow)
 6: Add LaTeX-themes (only tested in combination with 4)
 7: My packages only (remember to install the missing packages by hand!)
-8: My configs only (-> 9)
-9: My complete setup (Remember to copy your ssh keys and passwords first, future me. Equal to 4->5->6->7->8)
+8: My configs only (Remember to copy your ssh keys and passwords first, future me.)
+9: My complete setup (Equal to 4->5->6->7->8)
 "
 
 read -p "Select the step to perform:" answer
@@ -220,6 +227,7 @@ case ${answer:0:1} in
         install_texlive
         add_tex_themes
         setup_configs
+        install_fonts
         ToDo
         ;;  
     *)
