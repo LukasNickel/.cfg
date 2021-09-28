@@ -1,12 +1,12 @@
 [Configuration]
 MiscAlwaysShowTabs=FALSE
 MiscBell=FALSE
-MiscBordersDefault=TRUE
+MiscBordersDefault=FALSE
 MiscCursorBlinks=FALSE
 MiscCursorShape=TERMINAL_CURSOR_SHAPE_BLOCK
 MiscDefaultGeometry=80x24
 MiscInheritGeometry=FALSE
-MiscMenubarDefault=TRUE
+MiscMenubarDefault=FALSE
 MiscMouseAutohide=FALSE
 MiscToolbarDefault=FALSE
 MiscConfirmClose=TRUE
@@ -33,4 +33,5 @@ FontName=JuliaMono 12
 ColorBackground=#171717171717
 ColorForeground=#bbbbbbbbbbbb
 ColorPalette=rgb(76,76,76);rgb(187,0,0);rgb(3,246,34);rgb(242,240,103);rgb(99,208,240);rgb(206,111,218);rgb(0,217,223);rgb(187,187,187);rgb(84,84,84);rgb(255,85,85);rgb(125,246,28);rgb(255,255,85);rgb(98,202,231);rgb(255,154,245);rgb(0,204,215);rgb(255,255,255)
+FontUseSystem=TRUE
 
