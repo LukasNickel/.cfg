@@ -112,7 +112,7 @@ setup_configs() {
     # install vim plug and the plugins
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    nvim +PluginInstall +qall
+    nvim +PlugInstall +qall
     # kitty theme
     git clone --depth 1 git@github.com:dexpota/kitty-themes.git ~/.config/kitty/kitty-themes
 }
