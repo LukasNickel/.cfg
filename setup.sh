@@ -1,12 +1,11 @@
 # need to setup ssh first to copy the config repository
 common_minimal_packages='git make curl'
-common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura vlc telegram-desktop  i3lock i3status dunst rofi'
+common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura zathura-pdf-poppler vlc telegram-desktop  i3lock i3status dunst rofi node-js'
 manual_minimal_packages='code'
 manual_extra_packages='nextcloud-client nodejs i3-wm exa mattermost steam-manjaro xournalpp ttf-fira-code bat zsh-theme-powerlevel10k'
 conda_path=~/.local/anaconda3
 conda_link=https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
 # why would i define this twice?
-tex_path=~/.local/texlive
 TEXLIVE_INSTALL_PREFIX=~/.local/texlive
 config_url=git@github.com:LukasNickel/cfg.git
 
@@ -39,9 +38,8 @@ install_conda() {
 }
 
 install_texlive() {
-    echo "Searching for tex under $tex_path"
-    if [ ! -d $tex_path ]; then
-        echo "TeXLive not found."
+    echo "Searching for tex under $TEXLIVE_INSTALL_PREFIX"
+    if [ ! -d $TEXLIVE_INSTALL_PREFIX ]; then echo "TeXLive not found."
         read -p "Do you wish to install TeXLive now? Warning: This takes a while because there is a lot of data to download (y/N)" answer
         case ${answer:0:1} in
             y|Y|yes|Yes|Ja|ja )
@@ -102,7 +100,12 @@ setup_configs() {
     fi;
     config checkout
     config config status.showUntrackedFiles no
+
+    mkdir -p ~/.local/share
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share
+
     # more minow things
+    # which plugin requires this?
     pip install neovim
     # use zsh
     chsh -s /usr/bin/zsh
