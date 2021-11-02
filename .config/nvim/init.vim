@@ -2,6 +2,7 @@ set nocompatible
 filetype plugin indent on
 syntax on
 let mapleader = "-"
+let maplocalleader = "-"
 
 
 set showmatch       " show matching brackets
@@ -113,6 +114,8 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         let g:vimtex_quickfix_mode=0
         set conceallevel=2
         let g:tex_conceal='abdmg'
+        let g:vimtex_subfile_start_local = 1
+    Plug 'honza/vim-snippets'
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
