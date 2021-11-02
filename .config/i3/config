@@ -21,6 +21,7 @@ font pango: sans 11
 
 # autostart
 exec --no-startup-id hsetroot -center ~/.wallpaper.jpg
+exec --no-startup-id ~/.screenlayout/uni_dock.sh
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -47,6 +48,10 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 # i3-sensible-terminal
+#
+
+# jump to urgent
+bindsym $mod+u [urgent=latest] focus
 
 # lock screen
 bindsym $mod+Shift+x exec i3lock
