@@ -3,6 +3,8 @@ filetype plugin indent on
 syntax on
 let mapleader = "-"
 let maplocalleader = "-"
+let g:nvim_conda_path = expand('~/.local/anaconda3/bin/')
+let g:python3_host_prog = expand(g:nvim_conda_path..'python')
 
 
 set showmatch       " show matching brackets
@@ -101,9 +103,12 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         let g:latex_to_unicode_file_types = ".*"
     Plug 'dense-analysis/ale'
         let g:ale_linters = {'python': ['pyflakes']}
-        let g:ale_fixers = {'python': ['black']}
+        let g:ale_fixers = {'python': ['black', 'isort']}
         let g:ale_completion_enabled = 1
         let g:ale_completion_autoimport = 1
+        let g:ale_python_black_executable = expand(g:nvim_conda_path..'black')
+        let g:ale_python_pyflakes_executable = expand(g:nvim_conda_path..'pyflakes')
+        let g:ale_python_isort_executable = expand(g:nvim_conda_path..'isort')
     Plug 'sirver/ultisnips'
         let g:UltiSnipsExpandTrigger = '<tab>'
         let g:UltiSnipsJumpForwardTrigger = '<tab>'
