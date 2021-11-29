@@ -12,7 +12,7 @@ set ignorecase      " case insensitive search
 set smartcase       " sensitive search if using uppercases
 
 " TODO: what do I want to achieve here? 
-set mouse=v         " mouse in visual mode
+" set mouse=v         " mouse in visual mode
 " only in gui?
 " for neovide
 " set mouse=nicr
@@ -26,9 +26,6 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 set shiftwidth=4
-set smartindent " use smart auto indent
-set foldmethod=indent
-set foldlevelstart=2
 
 
 set number " show line numbers
@@ -117,7 +114,7 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'lervag/vimtex'
         let g:vimtex_view_method='zathura'
         let g:vimtex_quickfix_mode=0
-        set conceallevel=2
+        " set conceallevel=2
         let g:tex_conceal='abdmg'
         let g:vimtex_subfile_start_local = 1
     Plug 'honza/vim-snippets'
