@@ -118,7 +118,7 @@ else:
 `$2
 endsnippet
 
-snippet dm "Math" wA
+snippet dm "Math" w
 \[
 ${1:${VISUAL}}
 .\] $0
@@ -140,7 +140,7 @@ snippet / "Fraction" i
 endsnippet
 
 context "math()"
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wr
+snippet '((\d+)|(\d*)(\\)?([\w]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wr
 \\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
 
@@ -339,7 +339,7 @@ endsnippet
 
 priority 100
 context "math()"
-snippet '(?<!\\)(sin|cos|arccot|cot|csc|ln|log|exp|star|perp)' "ln" rw
+snippet '(?<!\\)(sin|cos|tan|ln|log|exp)' "ln" rw
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -351,7 +351,7 @@ endsnippet
 
 priority 200
 context "math()"
-snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int)' "ln" rwA
+snippet '(?<!\\)(arcsin|arccos|arctan|pi|int|alpha|beta|gamma|delta|theta|Theta|infty)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
