@@ -42,6 +42,9 @@ snippet ... "ldots" iA
 \ldots
 endsnippet
 
+snippet dm "Math" w
+\gls{dm}
+endsnippet
 
 snippet table "Table environment" b
 \begin{table}[${1:htpb}]
@@ -350,30 +353,12 @@ snippet dint "integral" wA
 endsnippet
 
 priority 200
-context "math()"
 snippet '(?<!\\)(arcsin|arccos|arctan|pi|int|alpha|beta|gamma|delta|theta|Theta|infty)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
-priority 100
-context "math()"
-snippet -> "to" iA
-\to 
-endsnippet
-
-priority 200
-context "math()"
-snippet <-> "leftrightarrow" iA
-\leftrightarrow
-endsnippet
-
 snippet -> "rightarrow" iA
 \rightarrow
-endsnippet
-
-context "math()"
-snippet !> "mapsto" iA
-\mapsto 
 endsnippet
 
 context "math()"
