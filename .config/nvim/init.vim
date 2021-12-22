@@ -96,6 +96,8 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'tpope/vim-fugitive'
     Plug 'jremmen/vim-ripgrep'
+    Plug 'ctrlpvim/ctrlp.vim'
+        let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
     Plug 'JuliaEditorSupport/julia-vim'
         let g:latex_to_unicode_file_types = ".*"
     Plug 'dense-analysis/ale'
