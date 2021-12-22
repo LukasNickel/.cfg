@@ -32,8 +32,6 @@ set number " show line numbers
 set relativenumber
 " set cc=80
 set scrolloff=2 " 2 lines above/below cursor when scrolling
-set showmode " show mode in status bar
-set ruler " show cursor position in status bar 
 
 
 " mappings
@@ -57,7 +55,6 @@ nnoremap // 0i# <esc>
 :inoremap <right> <nop>
 :inoremap <up> <nop>
 :inoremap <down> <nop>
-
 
 " enable copying to clipboard using ctrl c
 vnoremap <C-C> :w !xclip -i -sel c<CR><CR>
@@ -121,9 +118,8 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         let g:vimtex_subfile_start_local = 1
     Plug 'honza/vim-snippets'
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'davidhalter/jedi-vim'
 call plug#end()
-
 
 let g:vimwiki_list = [
  \ {'path':'~/vimwiki/public', 'auto_tags': 1},
@@ -133,31 +129,14 @@ let g:vimwiki_list = [
 
 let g:vimwiki_valid_html_tags = 'b,i,s,u,sub,sup,kbd,br,hr,svg,circle,rect,polygon,ellipse,path,polyline,pattern,marker,line,text,defs,linearGradient,stop'
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-nnoremap <leader>rn <Plug>(coc-rename)
-nnoremap <silent> gd <Plug>(coc-definition)
-nnoremap <leader>qf  <Plug>(coc-fix-current)
-
 " Toggle unicode expansion
 nnoremap <expr> <F7> LaTeXtoUnicode#Toggle()
-
 
 " neat pdf export https://askubuntu.com/questions/705973/how-can-i-print-from-vim-to-pdf
 command! -range=% PDF <line1>,<line2> hardcopy > %.ps | !ps2pdf %.ps && rm %.ps && echo 'Created: %.pdf'
 
-" read text from pdfs (loses formatting unfortunately)
+" read text from pdfs
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> - |fmt -csw78
-
 
 " If buffer modified, update any 'Last modified: ' in the first 20 lines.
 " 'Last modified: ' can have up to 10 characters before (they are retained).
@@ -184,5 +163,5 @@ fun! TrimWhitespace()
     keeppatterns %s/\s\+$//e
     call winrestview(l:save)
 endfun
-command! TrimWhitespace call TrimWhitespace()
+command! TW call TrimWhitespace()
 
