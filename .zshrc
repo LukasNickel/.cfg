@@ -1,7 +1,3 @@
-#source ~/.local/share/zsh_plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-autoload -Uz compinit && compinit -i
-zstyle ':completion:*' menu select=4
-zmodload zsh/complist
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -20,8 +16,11 @@ function open () {
 	nohup xdg-open $1 < /dev/null 2>/dev/null >/dev/null &!
 }
 
-#setopt no_share_history
+# Plugins
+source $HOME/.local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
+# ZSH options
 setopt EXTENDED_HISTORY
 export HISTSIZE=10000
 export SAVEHIST=10000
@@ -31,8 +30,6 @@ bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -65,7 +62,6 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias vim="nvim"
 alias du="du -h"
-
 
 # Changing "ls" to "exa"
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
@@ -128,11 +124,10 @@ ex ()
     echo "'$1' is not a valid file"
   fi
 }
+
 source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
-# enable syntax highlighting
-source /home/lukas/.local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
