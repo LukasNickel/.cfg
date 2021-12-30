@@ -1,11 +1,12 @@
 # need to setup ssh first to copy the config repository
 common_minimal_packages='git make curl'
-common_extra_packages='htop thunderbird firefox neovim kitty zsh gimp keepassxc zathura zathura-pdf-poppler vlc telegram-desktop  i3lock i3status dunst rofi node-js'
+# these should be available on all large distros. check repology.org future me
+common_extra_packages='htop thunderbird firefox exa neovim kitty zsh gimp keepassxc xournalpp zathura bat zathura-pdf-poppler vlc telegram-desktop  i3lock i3status dunst rofi pyright texlab'
+# the names of these differ sometimes or are not available at all
 manual_minimal_packages='code'
-manual_extra_packages='nextcloud-client nodejs i3-wm exa mattermost steam-manjaro xournalpp ttf-fira-code bat zsh-theme-powerlevel10k'
+manual_extra_packages='nextcloud-client i3-wm mattermost-desktop steam-manjaro ttf-fira-code zsh-theme-powerlevel10k'
 conda_path=~/.local/anaconda3
 conda_link=https://repo.anaconda.com/archive/Anaconda3-2021.05-Linux-x86_64.sh
-# why would i define this twice?
 TEXLIVE_INSTALL_PREFIX=~/.local/texlive
 config_url=git@github.com:LukasNickel/cfg.git
 
@@ -14,7 +15,7 @@ ToDo() {
     - Install the remaining manual packages if any
     - Login to stuff (messenger, thunderbird, firefox, ...)
     - Setup conda envs
-    - Test things (eg vim, coc was giving me a headache sometimes    
+    - Test things (eg vim lsp, zsh plugins...)
 "
 }
 
@@ -103,9 +104,12 @@ setup_configs() {
 
     mkdir -p ~/.local/share
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.local/share
+    git clone https://github.com/marlonrichert/zsh-autocomplete ~/.local/share
 
-    # more minow things
-    # which plugin requires this?
+    # more minor things
+    # just in case, conda should be installed already at that point
+    # maybe put it in a clean enviroment at some point
+    conda activate base 
     pip install neovim
     # use zsh
     chsh -s /usr/bin/zsh
@@ -154,6 +158,7 @@ fi
 }
 
 install_manually() {
+    # todo: make this automatic at least for manjaro
     echo "WARNING: You will need to install $1 manually. This is not implemented yet"
     echo "The package(s) might not be available for all distributions or named differently"
 }
