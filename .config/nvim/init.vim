@@ -56,19 +56,31 @@ nnoremap // 0i# <esc>
 :inoremap <up> <nop>
 :inoremap <down> <nop>
 
-" enable copying to clipboard using ctrl c
-vnoremap <C-C> :w !xclip -i -sel c<CR><CR>
+" Clipboard settings, always use clipboard for all delete, yank, change, put
+" operation, see https://stackoverflow.com/q/30691466/6064933
+if !empty(provider#clipboard#Executable())
+  set clipboard+=unnamedplus
+endif
 
 set nospell
 set spelllang=de,en_gb,en_us
 " inoremap <C-s> <c-g>u<Esc>[s1z=`]a<c-g>u
 
 " less flashy colors for git merges
-if &diff
-    colorscheme morning
-    syntax off
-endif
 
+" diff options
+set diffopt=
+set diffopt+=vertical  " show diff in vertical position
+set diffopt+=filler  " show filler for deleted lines
+set diffopt+=closeoff  " turn off diff when one file window is closed
+set diffopt+=context:3  " context for diff
+set diffopt+=internal,indent-heuristic,algorithm:histogram
+
+" External program to use for grep command
+if executable('rg')
+  set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+  set grepformat=%f:%l:%c:%m
+endif
 
 " Wildmenu completion {{{
 set wildmenu
@@ -90,22 +102,13 @@ nnoremap <C-h> <C-W>h
 call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'itchyny/lightline.vim'                       " Lightline statusbar
     Plug 'vimwiki/vimwiki'
+    Plug 'sainnhe/gruvbox-material'
     Plug 'Vimjas/vim-python-pep8-indent'
     Plug 'tpope/vim-fugitive'
     Plug 'jremmen/vim-ripgrep'
-    Plug 'ctrlpvim/ctrlp.vim'
-        let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
     Plug 'JuliaEditorSupport/julia-vim'
         let g:latex_to_unicode_file_types = ".*"
-    Plug 'dense-analysis/ale'
-        let g:ale_linters = {'python': ['pyflakes']}
-        let g:ale_fixers = {'python': ['black', 'isort']}
-        let g:ale_completion_enabled = 1
-        let g:ale_completion_autoimport = 1
-        let g:ale_python_black_executable = expand(g:nvim_conda_path..'black')
-        let g:ale_python_pyflakes_executable = expand(g:nvim_conda_path..'pyflakes')
-        let g:ale_python_isort_executable = expand(g:nvim_conda_path..'isort')
-    Plug 'sirver/ultisnips'
+   Plug 'sirver/ultisnips'
         let g:UltiSnipsExpandTrigger = '<tab>'
         let g:UltiSnipsJumpForwardTrigger = '<tab>'
         let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
@@ -118,8 +121,11 @@ call plug#begin('~/.local/share/nvim/site/plugged')
         let g:vimtex_subfile_start_local = 1
     Plug 'honza/vim-snippets'
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
-    Plug 'davidhalter/jedi-vim'
+    Plug 'neovim/nvim-lspconfig'
 call plug#end()
+
+colorscheme gruvbox-material
+
 
 let g:vimwiki_list = [
  \ {'path':'~/vimwiki/public', 'auto_tags': 1},
@@ -164,4 +170,56 @@ fun! TrimWhitespace()
     call winrestview(l:save)
 endfun
 command! TW call TrimWhitespace()
+
+" lsp setup
+lua << EOF
+local nvim_lsp = require('lspconfig')
+local servers = {'pyright', 'texlab'}
+
+-- Use an on_attach function to only map the following keys after
+-- the language server attaches to the current buffer
+local on_attach  = function(client, bufnr)
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
+    -- Mappings
+    local opts = { noremap=true, silent=true }
+
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+    buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+    -- Disable Autoformat
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+end
+for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup{
+    on_attach = on_attach
+    }
+end
+
+-- Set diganostic sign icons
+-- https://github.com/neovim/nvim-lspconfig/wiki/UI-customization#change-diagnostic-symbols-in-the-sign-column-gutter
+local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
+EOF
 
