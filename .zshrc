@@ -41,6 +41,10 @@ else
   export EDITOR='nvim'
 fi
 
+
+# https://github.com/rupa/z
+. ~/.config/z.sh
+
 # python
 alias pytest='pytest -v --lf'
 
@@ -80,6 +84,8 @@ alias grep='grep -rni'
 
 # kitty hyperlinked grep
 alias rg='kitty +kitten hyperlinked_grep'
+# kitty show images in terminal
+alias icat="kitty +kitten icat"
 
 # magic to control config files in git 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
