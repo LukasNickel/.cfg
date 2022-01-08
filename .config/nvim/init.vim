@@ -122,10 +122,18 @@ call plug#begin('~/.local/share/nvim/site/plugged')
     Plug 'honza/vim-snippets'
     Plug 'KeitaNakamura/tex-conceal.vim', {'for': ['tex', 'wiki']}
     Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
 colorscheme gruvbox-material
 
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 let g:vimwiki_list = [
  \ {'path':'~/vimwiki/public', 'auto_tags': 1},
@@ -223,3 +231,8 @@ end
 
 EOF
 
+" Which key to use? Do I want the terminal split?
+function! Termpy()
+  exec winheight(0)/4."split" | terminal python3 %
+endfunction
+command! PY call Termpy()
