@@ -12,6 +12,11 @@ def env(name):
 
 endglobal
 
+snippet ßß "Easier backslash" iA
+\
+endsnippet
+
+
 snippet template "Basic template" b
 \documentclass[a4paper]{article}
 \usepackage[utf8]{inputenc}
@@ -40,10 +45,6 @@ endsnippet
 priority 100
 snippet ... "ldots" iA
 \ldots
-endsnippet
-
-snippet dm "Math" w
-\gls{dm}
 endsnippet
 
 snippet table "Table environment" b
@@ -127,7 +128,7 @@ ${1:${VISUAL}}
 .\] $0
 endsnippet
 
-snippet ali "Align" bA
+snippet align "Align" bA
 \begin{align*}
 	${1:${VISUAL}}
 \end{align*}
@@ -151,16 +152,6 @@ snippet != "equals" iA
 \neq 
 endsnippet
 
-context "math()"
-snippet ceil "ceil" iA
-\left\lceil $1 \right\rceil $0
-endsnippet
-
-context "math()"
-snippet floor "floor" iA
-\left\lfloor $1 \right\rfloor$0
-endsnippet
-
 snippet pmat "pmat" iA
 \begin{pmatrix} $1 \end{pmatrix} $0
 endsnippet
@@ -178,19 +169,11 @@ snippet lr "left( right)" i
 \left( ${1:${VISUAL}} \right) $0
 endsnippet
 
-snippet lr( "left( right)" i
-\left( ${1:${VISUAL}} \right) $0
-endsnippet
-
 snippet lr| "left| right|" i
 \left| ${1:${VISUAL}} \right| $0
 endsnippet
 
 snippet lr{ "left\{ right\}" i
-\left\\{ ${1:${VISUAL}} \right\\} $0
-endsnippet
-
-snippet lrb "left\{ right\}" i
 \left\\{ ${1:${VISUAL}} \right\\} $0
 endsnippet
 
@@ -241,16 +224,6 @@ endsnippet
 
 snippet >= "geq" iA
 \ge 
-endsnippet
-
-context "math()"
-snippet EE "geq" iA
-\exists 
-endsnippet
-
-context "math()"
-snippet AA "forall" iA
-\forall 
 endsnippet
 
 context "math()"
@@ -353,7 +326,7 @@ snippet dint "integral" w
 endsnippet
 
 priority 200
-snippet '(?<!\\)(arcsin|arccos|arctan|pi|alpha|beta|gamma|delta|theta|Theta|infty)' "ln" rwA
+snippet '(?<!\\)(arcsin|arccos|arctan|pi|alpha|beta|gamma|delta|theta|Theta|infty)' "ln" rw
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
