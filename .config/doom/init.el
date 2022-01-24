@@ -14,7 +14,6 @@
 ;;      Alternatively, press 'gd' (or 'C-c c d') on a module to browse its
 ;;      directory (for easy access to its source code).
 
-(add-variable-watcher 'org-agenda-files (lambda (&rest x) (message "Oops! tab-width changed: %S" x)))
 (doom! :input
        ;;chinese
        ;;japanese
