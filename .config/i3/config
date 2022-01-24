@@ -210,3 +210,7 @@ assign [class="Slack"] $ws1
 assign [class="Mattermost"] $ws4
 assign [class="Telegram"] $ws4
 assign [class="firefox"] $ws3
+
+# https://github.com/TyberiusPrime/i3-instant-layout
+# requires xdotool
+bindsym $mod+Escape exec "i3-instant-layout --list | rofi -dmenu -i | i3-instant-layout -
