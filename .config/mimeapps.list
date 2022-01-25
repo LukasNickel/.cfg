@@ -1,0 +1,35 @@
+[Default Applications]
+application/octet-stream=mousepad.desktop
+application/pdf=org.pwmt.zathura.desktop
+application/x-gettext-translation=mousepad.desktop
+application/xml=mousepad.desktop
+application/x-wine-extension-ini=mousepad.desktop
+text/plain=mousepad.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-5WY190.desktop
+x-scheme-handler/mailto=userapp-Thunderbird-IQ3490.desktop
+message/rfc822=userapp-Thunderbird-IQ3490.desktop
+x-scheme-handler/mid=userapp-Thunderbird-IQ3490.desktop
+x-scheme-handler/webcal=userapp-Thunderbird-BSO590.desktop
+text/calendar=userapp-Thunderbird-BSO590.desktop
+application/x-extension-ics=userapp-Thunderbird-BSO590.desktop
+x-scheme-handler/webcals=userapp-Thunderbird-BSO590.desktop
+
+[Added Associations]
+application/x-shellscript=org.xfce.mousepad.desktop;mousepad.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-5WY190.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-IQ3490.desktop;
+x-scheme-handler/mid=userapp-Thunderbird-IQ3490.desktop;
+x-scheme-handler/webcal=userapp-Thunderbird-BSO590.desktop;
+x-scheme-handler/webcals=userapp-Thunderbird-BSO590.desktop;
+application/pdf=org.pwmt.zathura.desktop;com.github.xournalpp.xournalpp.desktop;org.gnome.Evince.desktop;okularApplication_pdf.desktop;firefox.desktop;
+video/x-matroska=vlc.desktop;
+text/plain=org.xfce.mousepad.desktop;nvim.desktop;
+text/x-python=org.xfce.mousepad.desktop;code-oss.desktop;nvim.desktop;
+image/png=viewnior.desktop;
+image/jpeg=viewnior.desktop;
+text/x-tex=org.xfce.mousepad.desktop;
+application/json=org.xfce.mousepad.desktop;
+application/x-object=org.xfce.mousepad.desktop;
+application/x-latex=code-oss.desktop;
+text/x-makefile=org.xfce.mousepad.desktop;
+text/csv=libreoffice-calc.desktop;org.xfce.mousepad.desktop;
