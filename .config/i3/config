@@ -27,6 +27,7 @@ font pango: sans 11
 #should be handled by dockd now
 #exec --no-startup-id ~/.screenlayout/uni_dock.sh
 exec --no-startup-id dockd --daemon
+exec --no-startup-id nextcloud
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -210,3 +211,7 @@ assign [class="Slack"] $ws1
 assign [class="Mattermost"] $ws4
 assign [class="Telegram"] $ws4
 assign [class="firefox"] $ws3
+
+# https://github.com/TyberiusPrime/i3-instant-layout
+# requires xdotool
+bindsym $mod+Escape exec "i3-instant-layout --list | rofi -dmenu -i | i3-instant-layout -

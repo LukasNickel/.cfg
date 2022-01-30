@@ -319,5 +319,3 @@
                 :desc "follow" "f" #'orui-follow-mode)
      )
 )
-
-(global-set-key [f1] (lambda () (interactive) (message "%s" org-agenda-files)))
