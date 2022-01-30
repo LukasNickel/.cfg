@@ -13,6 +13,7 @@
 (setq user-full-name "Lukas Nickel"
       user-mail-address "lukasnickel@outlook.de")
 
+(ispell-change-dictionary "german" t)
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
