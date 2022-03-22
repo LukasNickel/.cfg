@@ -66,7 +66,7 @@
 
 (setq org-directory "~/org"
       org-roam-directory "~/org"
-      org-agenda-files '("~/org"))
+      org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
 ;;Loads of org-mode related
 ;;Easier use of latex
 (use-package! org-fragtog
@@ -128,11 +128,15 @@
 \n* Summary
 \n\n\n* Rough note space\n")
            :unnarrowed t)
-          ("p" "person" plain "%?"
-           :if-new
-           (file+head "${slug}.org" "%^{relation|some guy|family|friend|colleague}p %^{birthday}p %^{address}p
-#+title:${slug}\n#+filetags: :person: \n"
-                      :unnarrowed t)))))
+        ("p" "presentation" plain "%?"
+         :if-new
+         (file+head "${slug}.org"
+                    "#+title: ${title}\n#+filetags: presentation\n#+AUTHOR: Lukas Nickel\n#+OPTIONS: H:2 toc:t num:t\n#+LATEX_CLASS: beamer\n#+LATEX_CLASS_OPTIONS: [presentation]\n#+BEAMER_THEME: tudo"
+                    )
+         :unnarrowed t)
+          )
+          )
+    )
 
 ;; Hype
 (use-package! org-ref
@@ -141,8 +145,6 @@
     (setq
          org-ref-completion-library 'org-ref-ivy-cite
          org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-         bibtex-completion-bibliography (list "~/org/references/library.bib")
-         bibtex-completion-notes "~/org/references/notes/bibnotes.org"
          org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
          org-ref-notes-directory "~/org/references/notes/"
          org-ref-notes-function 'orb-edit-notes
@@ -319,3 +321,4 @@
                 :desc "follow" "f" #'orui-follow-mode)
      )
 )
+
