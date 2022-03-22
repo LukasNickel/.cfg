@@ -215,3 +215,11 @@ assign [class="firefox"] $ws3
 # https://github.com/TyberiusPrime/i3-instant-layout
 # requires xdotool
 bindsym $mod+Escape exec "i3-instant-layout --list | rofi -dmenu -i | i3-instant-layout -
+
+
+
+# Zoom
+for_window [class="zoom" instance="zoom" title="Zoom Meeting"] floating enable
+for_window [class="^zoom$" title="^Chat"] floating enable; resize set 660x620
+for_window [class="^zoom$" title="^Participants"] floating enable
+for_window [class="^zoom$" title="^Breakout Rooms"] floating enable
