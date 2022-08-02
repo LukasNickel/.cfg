@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: inline_si
+# uuid: inline_si
+# --
+\$\SI{$1}{$2}\$ $3

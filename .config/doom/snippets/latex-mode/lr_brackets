@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: left-right brackets
+# uuid: lr()
+# key: trigger-key
+# condition: t
+# --
+\left($0 \right) $1
