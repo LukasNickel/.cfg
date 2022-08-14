@@ -106,7 +106,6 @@
 
 ;; I guess thats just what a new file will list basically?
 ;; Ah its for new org roam nodes nice
-;; person is useless to me and doenst org-ref use the things below anyway?
 (after! org-roam
     (setq org-roam-capture-templates
           `(("s" "standard" plain "%?"
@@ -122,16 +121,30 @@
         ("r" "ref" plain "%?"
            :if-new
            (file+head "references/notes/${citekey}.org"
-           "#+title: ${title}\n
-\n#+filetags: reference ${keywords} \n
-\n* ${title}\n\n
+           "#+title: ${title}
+\n#+filetags: reference ${keywords}
+\n* ${title}\n
 \n* Summary
 \n\n\n* Rough note space\n")
            :unnarrowed t)
         ("p" "presentation" plain "%?"
          :if-new
          (file+head "${slug}.org"
-                    "#+title: ${title}\n#+filetags: presentation\n#+AUTHOR: Lukas Nickel\n#+OPTIONS: H:2 toc:t num:t\n#+LATEX_CLASS: beamer\n#+LATEX_CLASS_OPTIONS: [presentation]\n#+BEAMER_THEME: tudo"
+"#+title: ${title}
+#+filetags: presentation
+#+AUTHOR: Lukas Nickel
+#+OPTIONS: H:2 toc:t num:t
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation, 10pt]
+#+BEAMER_THEME: tudo
+#+LATEX_HEADER: \\usepackage{amsmath}
+#+LATEX_HEADER: \\usepackage{amssymb}
+#+LATEX_HEADER: \\usepackage{mathtools}
+#+LATEX_HEADER: \\usepackage{csquotes}
+#+LATEX_HEADER: \\usepackage{unicode-math}
+#+LATEX_HEADER: \\usepackage{siunitx}
+#+LATEX_HEADER: \\unimathsetup{math-style=ISO, bold-style=ISO, nabla=upright, partial=upright, mathrm=sym}
+"
                     )
          :unnarrowed t)
           )
@@ -291,6 +304,9 @@
         (variable-pitch-mode 1))
     (variable-pitch-mode -1)))
 
+;; Use latexmk instead of always pdflatex
+;; This should make things more uniform everywhere
+(setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
 
 ;; Thats a good idea, lets see if I can get used to it
 ;; I can remove some though, no?

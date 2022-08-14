@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: siunitx
+# uuid: siunitx
+# --
+\SI{$1}{$2} $3
