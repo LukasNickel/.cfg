@@ -97,13 +97,6 @@
 
 (setq org-cite-global-bibliography "~/org/references/library.bib")
 
-;; That sounds hot
-(use-package! org-roam-ui
-  :after org-roam
-  :config
-  (setq org-roam-ui-open-on-start nil)
-  (setq org-roam-ui-browser-function #'xwidget-webkit-browse-url))
-
 ;; I guess thats just what a new file will list basically?
 ;; Ah its for new org roam nodes nice
 (after! org-roam
@@ -161,15 +154,15 @@
          org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
          org-ref-notes-directory "~/org/references/notes/"
          org-ref-notes-function 'orb-edit-notes
-         org-ref-pdf-directory "~/org/references"
+         org-ref-pdf-directory "~/org/references/"
     ))
 (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
 (after! org-ref
 (setq
- bibtex-completion-library-path "~/org/references"
+ bibtex-completion-library-path "~/org/references/"
  bibtex-completion-notes-path "~/org/references/notes/"
- bibtex-completion-bibliography "~/org/references/library.bib"
+ bibtex-completion-bibliography '("~/org/references/library.bib")
  bibtex-completion-pdf-field "file"
  bibtex-completion-notes-template-multiple-files
  (concat
