@@ -18,7 +18,7 @@ function open () {
 
 # Plugins
 source $HOME/.local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# source $HOME/.local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $HOME/.local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # ZSH options
 setopt EXTENDED_HISTORY
