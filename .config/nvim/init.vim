@@ -212,8 +212,8 @@ local on_attach  = function(client, bufnr)
     buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
     -- Disable Autoformat
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.resolved_capabilities.document_formatting = true
+    client.resolved_capabilities.document_range_formatting = true
 end
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup{
@@ -223,7 +223,7 @@ end
 
 -- Set diganostic sign icons
 -- https://github.com/neovim/nvim-lspconfig/wiki/UI-customization#change-diagnostic-symbols-in-the-sign-column-gutter
-local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+local signs = { Error = "E", Warning = "W ", Hint = "H ", Information = "I " }
 for type, icon in pairs(signs) do
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
