@@ -95,8 +95,11 @@
               #'org-roam-unlinked-references-insert-section))
   (org-roam-setup))
 
+(use-package! oc
+  :after org bibtex-completion bibtex-actions
+  :config
 (setq org-cite-global-bibliography "~/org/references/library.bib")
-
+)
 ;; I guess thats just what a new file will list basically?
 ;; Ah its for new org roam nodes nice
 (after! org-roam
@@ -300,6 +303,7 @@
 ;; Use latexmk instead of always pdflatex
 ;; This should make things more uniform everywhere
 (setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
+(setq org-babel-python-command "/home/lukas/.local/anaconda3/bin/python")
 
 ;; Thats a good idea, lets see if I can get used to it
 ;; I can remove some though, no?
