@@ -302,6 +302,10 @@
 
 ;; Use latexmk instead of always pdflatex
 ;; This should make things more uniform everywhere
+ ;; Use minted
+(add-to-list 'org-latex-packages-alist '("outputdir=build" "minted"))
+(setq org-latex-listings 'minted)
+
 (setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
 (setq org-babel-python-command "/home/lukas/.local/anaconda3/bin/python")
 
