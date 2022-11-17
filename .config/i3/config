@@ -224,5 +224,8 @@ for_window [class="^zoom$" title="^Chat"] floating enable; resize set 660x620
 for_window [class="^zoom$" title="^Participants"] floating enable
 for_window [class="^zoom$" title="^Breakout Rooms"] floating enable
 
-bindsym $mod+Shift+v exec sh -c 'export f=$(mktemp) && kitty --title vim-anywhere -e nvim -c startinsert $f && xclip -sel clipboard <$f'
-for_window [title="vim-anywhere"] floating enable move position center resize set 600 600;
+bindsym $mod+Shift+v exec sh -c 'export f=$(mktemp) && kitty --title vim-anywhere -e nvim -c startinsert -c "set laststatus=0" $f && xclip -sel clipboard <$f'
+for_window [title="vim-anywhere"] border none floating enable move position center resize set 600 600;
+
+# floating thunderbird write window
+for_window [class="Thunderbird" instance="Msgcompose" window_role="Msgcompose"] floating enable
