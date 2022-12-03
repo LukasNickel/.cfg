@@ -109,7 +109,7 @@ shopt -s histappend
 alias pytest='pytest -v --lf'
 
 # texlive setup
-export PATH="$HOME/.local/texlive/2021/bin/x86_64-linux:$PATH"
+export PATH="$HOME/.local/texlive/2022/bin/x86_64-linux:$PATH"
 
 # navigation
 alias ..='cd ..' 
@@ -153,5 +153,9 @@ else
     fi
 fi
 unset __conda_setup
+
+if [ -f "/home/lukas/.local/anaconda3/etc/profile.d/mamba.sh" ]; then
+    . "/home/lukas/.local/anaconda3/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<
 

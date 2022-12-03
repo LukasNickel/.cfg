@@ -46,7 +46,7 @@ fi
 alias pytest='pytest -v --lf'
 
 # texlive setup
-export PATH="$HOME/.local/texlive/2021/bin/x86_64-linux:$PATH"
+export PATH="$HOME/.local/texlive/2022/bin/x86_64-linux:$PATH"
 
 # navigation
 alias ..='cd ..' 
@@ -75,9 +75,6 @@ alias gitgraph="git log --graph --abbrev-commit --decorate --format=format:'%C(b
 
 alias cat='bat'
 
-# sane grep defaults
-alias grep='grep -rni'
-
 # kitty hyperlinked grep
 alias rg='kitty +kitten hyperlinked_grep'
 # kitty show images in terminal
@@ -88,17 +85,21 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/lukas/.local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$("$HOME/.local/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/lukas/.local/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/lukas/.local/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/.local/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/.local/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/lukas/.local/anaconda3/bin:$PATH"
+        export PATH="$HOME/.local/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
+
+if [ -f "$HOME/.local/anaconda3/etc/profile.d/mamba.sh" ]; then
+    . "$HOME/.local/anaconda3/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<
 
 # # ex - archive extractor
