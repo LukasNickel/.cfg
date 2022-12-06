@@ -229,3 +229,7 @@ for_window [title="vim-anywhere"] border none floating enable move position cent
 
 # floating thunderbird write window
 for_window [class="Thunderbird" instance="Msgcompose" window_role="Msgcompose"] floating enable
+
+# noah says no borders
+hide_edge_borders smart
+default_border pixel 1
