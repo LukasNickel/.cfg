@@ -64,3 +64,4 @@
 (package! centered-window)
 
 (package! org-roam-ui)
+(package! org-download)
