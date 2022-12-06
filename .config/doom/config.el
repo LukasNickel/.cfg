@@ -119,10 +119,15 @@
            (file+head "references/notes/${citekey}.org"
            "#+title: ${title}
 \n#+filetags: reference ${keywords}
-\n* ${title}\n
+\n* Notes for ${title}
+:PROPERTIES:
+:NOTER_DOCUMENT: ${file}
+:NOTER_PAGE:
+:END:
 \n* Summary
 \n\n\n* Rough note space\n")
-           :unnarrowed t)
+           :unnarrowed t
+           :jump-to-captured t)
         ("p" "presentation" plain "%?"
          :if-new
          (file+head "${slug}.org"

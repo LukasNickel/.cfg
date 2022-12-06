@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: curly_bracket_close
+# key: j
+# --
+} $0
