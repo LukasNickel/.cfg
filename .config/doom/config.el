@@ -13,7 +13,7 @@
 (setq user-full-name "Lukas Nickel"
       user-mail-address "lukasnickel@outlook.de")
 
-(ispell-change-dictionary "german" t)
+(ispell-change-dictionary "en_US" t)
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -27,7 +27,7 @@
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 (setq doom-font (font-spec :family "Fira Code" :size 15)
-      doom-variable-pitch-font (font-spec :family "Roboto" :size 15)
+      doom-variable-pitch-font (font-spec :family "Fira Code" :size 15)
       doom-big-font (font-spec :family "Fira Code" :size 24))
 
 
@@ -61,18 +61,17 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-;;
 
 
 (setq org-directory "~/org"
       org-roam-directory "~/org"
       org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+
 ;;Loads of org-mode related
 ;;Easier use of latex
 (use-package! org-fragtog
   :after org
-  :hook (org-mode . org-fragtog-mode)
-  )
+  :hook (org-mode . org-fragtog-mode))
 
 (use-package! org-appear
   :after org
@@ -98,8 +97,8 @@
 (use-package! oc
   :after org bibtex-completion bibtex-actions
   :config
-(setq org-cite-global-bibliography "~/org/references/library.bib")
-)
+  (setq org-cite-global-bibliography "~/org/references/library.bib"))
+
 ;; I guess thats just what a new file will list basically?
 ;; Ah its for new org roam nodes nice
 (after! org-roam
@@ -119,13 +118,12 @@
            (file+head "references/notes/${citekey}.org"
            "#+title: ${title}
 \n#+filetags: reference ${keywords}
-\n* Notes for ${title}
+\n* Summary \n
+\n* Notes
 :PROPERTIES:
 :NOTER_DOCUMENT: ${file}
 :NOTER_PAGE:
-:END:
-\n* Summary
-\n\n\n* Rough note space\n")
+:END:\n")
            :unnarrowed t
            :jump-to-captured t)
         ("p" "presentation" plain "%?"
@@ -145,12 +143,8 @@
 #+LATEX_HEADER: \\usepackage{unicode-math}
 #+LATEX_HEADER: \\usepackage{siunitx}
 #+LATEX_HEADER: \\unimathsetup{math-style=ISO, bold-style=ISO, nabla=upright, partial=upright, mathrm=sym}
-"
-                    )
-         :unnarrowed t)
-          )
-          )
-    )
+")
+         :unnarrowed t))))
 
 ;; Hype
 (use-package! org-ref
@@ -162,8 +156,7 @@
          org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
          org-ref-notes-directory "~/org/references/notes/"
          org-ref-notes-function 'orb-edit-notes
-         org-ref-pdf-directory "~/org/references/"
-    ))
+         org-ref-pdf-directory "~/org/references/"))
 (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
 (after! org-ref
@@ -186,10 +179,7 @@
   ":YEAR: ${year}\n"
   ":DOI: ${doi}\n"
   ":URL: ${url}\n"
-  ":END:\n\n"
-  )
- )
-)
+  ":END:\n\n")))
 
 ;; Why not
 (use-package! org-roam-bibtex
@@ -199,10 +189,9 @@
   (require 'org-ref)
   (setq orb-preformat-keywords
    '("citekey" "title" "url" "file" "author-or-editor" "keywords" "pdf" "doi" "author" "tags" "year" "author-bbrev")))
-;)
 
 ;; Thats a lot of settings
-        (after! org
+(after! org
 (setq org-ellipsis " ▾ ")
   (appendq! +ligatures-extra-symbols
           `(:checkbox      "☐"
@@ -314,8 +303,7 @@
 (setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
 (setq org-babel-python-command "/home/lukas/.local/anaconda3/bin/python")
 
-;; Thats a good idea, lets see if I can get used to it
-;; I can remove some though, no?
+; org roam bindings
 (map! :leader
       (:prefix-map ("r" . "regular")
        :desc "find file"            "f"   #'org-roam-node-find
@@ -324,23 +312,11 @@
        :desc "start taking notes"   "S"   #'org-noter
        :desc "toggle buffer"        "b"   #'org-roam-buffer-toggle
        :desc "insert note"          "i"   #'org-roam-node-insert
-       :desc "server"               "g"   #'org-roam-server
        :desc "quit notes"           "q"   #'org-noter-kill-session
        :desc "tag (roam)"           "t"   #'org-roam-tag-add
        :desc "tag (org)"            "T"   #'org-set-tags-command
-       :desc "change nano-theme"    "n"   #'nano-toggle-theme
        :desc "rebuid db"            "d"   #'org-roam-db-build-cache
        :desc "cite"                 "c"   #'org-ref-insert-cite-link
-       :desc "thesaurus this word"  "w"  #'powerthesaurus-lookup-word-at-point
-       :desc "thesaurus lookup word" "W"   #'powerthesaurus-lookup-word
-       :desc "outline"              "o"   #'org-ol-tree
-       (:prefix  ("r" . "orui")
-                :desc "orui-mode" "r" #'org-roam-ui-mode
-                :desc "zoom" "z" #'orui-node-zoom
-                :desc "open" "o" #'orui-open
-                :desc "local" "l" #'orui-node-local
-                :desc "sync theme" "t" #'orui-sync-theme
-                :desc "follow" "f" #'orui-follow-mode)
      )
 )
 
@@ -356,3 +332,23 @@
              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
              ("\\paragraph{%s}" . "\\paragraph*{%s}")
              ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(setq fancy-splash-image "~/.config/doom/blackhole.png")
+;; true transparency
+(set-frame-parameter nil 'alpha-background 100)
+(add-to-list 'default-frame-alist '(alpha-background . 100))
+
+;; only after emacs 29
+(defun toggle-transparency ()
+  "Toggle transparency."
+  (interactive)
+  (let ((alpha-background (frame-parameter nil 'alpha-background)))
+    (set-frame-parameter
+     nil 'alpha-background
+     (if (eql (cond ((numberp alpha-background) alpha-background)
+                    ((numberp (cdr alpha-background)) (cdr alpha-background))
+                    )
+              100)
+         '96 '100))))
+
+(global-set-key (kbd "C-c t r") 'toggle-transparency)
