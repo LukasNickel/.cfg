@@ -38,7 +38,10 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-;; This is the default obviously, jsut to have it explicit
+(setq org-directory "~/org"
+      org-roam-directory "~/org"
+      org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -62,11 +65,6 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-
-(setq org-directory "~/org"
-      org-roam-directory "~/org"
-      org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
-
 ;;Loads of org-mode related
 ;;Easier use of latex
 (use-package! org-fragtog
@@ -80,9 +78,6 @@
            org-appear-autolinks t
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
-
-;; I hope this works. Having a Zettelkasten sounds great
-(setq org-roam-v2-ack t)
 
 (use-package! org-roam
   :after org
@@ -99,8 +94,7 @@
   :config
   (setq org-cite-global-bibliography "~/org/references/library.bib"))
 
-;; I guess thats just what a new file will list basically?
-;; Ah its for new org roam nodes nice
+;; TODO: The templates could go in extra files
 (after! org-roam
     (setq org-roam-capture-templates
           `(("s" "standard" plain "%?"
@@ -190,96 +184,6 @@
   (setq orb-preformat-keywords
    '("citekey" "title" "url" "file" "author-or-editor" "keywords" "pdf" "doi" "author" "tags" "year" "author-bbrev")))
 
-;; Thats a lot of settings
-(after! org
-(setq org-ellipsis " ▾ ")
-  (appendq! +ligatures-extra-symbols
-          `(:checkbox      "☐"
-            :pending       "◼"
-            :checkedbox    "☑"
-            :list_property "∷"
-            :em_dash       "—"
-            :ellipses      "…"
-            :arrow_right   "→"
-            :arrow_left    "←"
-            :title         nil
-            :subtitle      "𝙩"
-            :author        "𝘼"
-            :date          "𝘿"
-            :property      ""
-            :options       "⌥"
-            :startup       "⏻"
-            :macro         "𝓜"
-            :html_head     "🅷"
-            :html          "🅗"
-            :latex_class   "🄻"
-            :latex_header  "🅻"
-            :beamer_header "🅑"
-            :latex         "🅛"
-            :attr_latex    "🄛"
-            :attr_html     "🄗"
-            :attr_org      "⒪"
-            :begin_quote   "❝"
-            :end_quote     "❞"
-            :caption       "☰"
-            :header        "›"
-            :results       "🠶"
-            :begin_export  "⏩"
-            :end_export    "⏪"
-            :properties    ""
-            :end           "∎"
-            :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
-            :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
-            :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
-            :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
-            :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)
-            :roam_tags nil
-            :filetags nil))
-(set-ligatures! 'org-mode
-  :merge t
-  :checkbox      "[ ]"
-  :pending       "[-]"
-  :checkedbox    "[X]"
-  :list_property "::"
-  :em_dash       "---"
-  :ellipsis      "..."
-  :arrow_right   "->"
-  :arrow_left    "<-"
-  :title         "#+title:"
-  :subtitle      "#+subtitle:"
-  :author        "#+author:"
-  :date          "#+date:"
-  :property      "#+property:"
-  :options       "#+options:"
-  :startup       "#+startup:"
-  :macro         "#+macro:"
-  :html_head     "#+html_head:"
-  :html          "#+html:"
-  :latex_class   "#+latex_class:"
-  :latex_header  "#+latex_header:"
-  :beamer_header "#+beamer_header:"
-  :latex         "#+latex:"
-  :attr_latex    "#+attr_latex:"
-  :attr_html     "#+attr_html:"
-  :attr_org      "#+attr_org:"
-  :begin_quote   "#+begin_quote"
-  :end_quote     "#+end_quote"
-  :caption       "#+caption:"
-  :header        "#+header:"
-  :begin_export  "#+begin_export"
-  :end_export    "#+end_export"
-  :results       "#+RESULTS:"
-  :property      ":PROPERTIES:"
-  :end           ":END:"
-  :priority_a    "[#A]"
-  :priority_b    "[#B]"
-  :priority_c    "[#C]"
-  :priority_d    "[#D]"
-  :priority_e    "[#E]"
-  :roam_tags     "#+roam_tags:"
-  :filetags      "#+filetags:")
-(plist-put +ligatures-extra-symbols :name "⁍")
-)
 
 (with-eval-after-load 'org
   (plist-put org-format-latex-options :background 'default))
