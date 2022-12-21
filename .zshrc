@@ -18,7 +18,8 @@ function open () {
 
 # Plugins
 source $HOME/.local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $HOME/.local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source $HOME/.local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source $HOME/.local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # ZSH options
 setopt EXTENDED_HISTORY
@@ -130,7 +131,3 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-# for zoom presentations
-alias present="GTK_THEME=WhiteSur-dark pympress"
