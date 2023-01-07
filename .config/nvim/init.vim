@@ -11,14 +11,6 @@ set showmatch       " show matching brackets
 set ignorecase      " case insensitive search
 set smartcase       " sensitive search if using uppercases
 
-" TODO: what do I want to achieve here? 
-" set mouse=v         " mouse in visual mode
-" only in gui?
-" for neovide
-" set mouse=nicr
-" set mouse=a         
-
-
 set hlsearch
 
 " tabs and indent
@@ -30,31 +22,13 @@ set shiftwidth=4
 
 set number " show line numbers
 set relativenumber
-" set cc=80
 set scrolloff=2 " 2 lines above/below cursor when scrolling
 
 
-" mappings
-" Its kinda reversed but w/e
-" Also not really reachable on a DE keyboard, which keys  do i want to use
-" instead?
-nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
-nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
-nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
-nnoremap <leader>{ viw<esc>a}<esc>bi{<esc>lel
-nnoremap <leader>[ viw<esc>a]<esc>bi[<esc>lel
 " This should be filetype sensitive
 nnoremap // 0i# <esc>
 :inoremap jk <esc>
-:inoremap <esc> <nop>
-:noremap <left> <nop>
-:noremap <right> <nop>
-:noremap <up> <nop>
-:noremap <down> <nop>
-:inoremap <left> <nop>
-:inoremap <right> <nop>
-:inoremap <up> <nop>
-:inoremap <down> <nop>
+
 
 " Clipboard settings, always use clipboard for all delete, yank, change, put
 " operation, see https://stackoverflow.com/q/30691466/6064933
@@ -82,16 +56,7 @@ if executable('rg')
   set grepformat=%f:%l:%c:%m
 endif
 
-" Wildmenu completion {{{
-set wildmenu
-set wildmode=list:longest,full
-set wildignore=
-set wildignore+=.hg,.git,.svn,*.pyc,*.spl,*.o,*.out,*.DS_Store,*.class,*.manifest
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*,*.bak,*.exe,target,tags,gem.tags
-set wildignore+=*.pyc,*.DS_Store,*.db,*.min.js
-set wildignore+=*.jpg,*.jpeg,*.png,*.gif,*.zip,*.xc*,*.pbxproj,*.xcodeproj/**,*.xcassets/**
-set wildignore+=*.js.map,ui/public/client/*,cassettes/**,node_modules/**
-" }}}
+
 
 " Faster buffer switching
 nnoremap <C-j> <C-W>j
@@ -234,8 +199,3 @@ end
 
 EOF
 
-" Which key to use? Do I want the terminal split?
-function! Termpy()
-  exec winheight(0)/4."split" | terminal python3 %
-endfunction
-command! PY call Termpy()
