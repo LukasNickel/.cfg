@@ -257,5 +257,5 @@
 
 (global-set-key (kbd "C-c t r") 'toggle-transparency)
 
-(with-eval-after-load 'ox
-  (require 'ox-hugo))
+;(with-eval-after-load 'ox
+;  (require 'ox-hugo))
