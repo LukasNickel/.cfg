@@ -1,0 +1,619 @@
+:PROPERTIES:
+:ID:       e46b94ec-5171-46b4-8747-ea63433c36a6
+:END:
+#+title: neovim
+#+filetags: :lsp:babel:config:vim:lua:
+#+options: toc:1
+#+property: header-args :exports code :tangle "~/.config/nvim/init.lua"
+
+This config is heavily inspired by the amazing [[https://github.com/nvim-lua/kickstart.nvim/blob/4916072854d01d0503821b7f3061daeb381f0441/init.lua][Kickstart Neovim]].
+I copied the relevant bits into this org file and create
+the =init.lua= using ~org-babel-tangle~.
+
+* Packages
+** Management
+I use =packer= for package management.
+No real reason despite it being used in the kickstart config.
+Also it allows one to automatically install all packages on first start, which is pretty neat.
+
+#+begin_src lua
+local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
+local is_bootstrap = false
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  is_bootstrap = true
+  vim.fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path }
+  vim.cmd [[packadd packer.nvim]]
+end
+#+end_src
+
+Then we define all the packages:
+
+#+begin_src lua
+require('packer').startup(function(use)
+  -- Package manager
+  use 'wbthomason/packer.nvim'
+#+end_src
+
+** LSP
+
+For LSP, I use the builtin instead of [[https://github.com/neoclide/coc.nvim][coc]] or the likes.
+This is where development is heading and it works pretty well since quite some time.
+I always had my fair share of troubles configuring it properly, but kickstart made this pretty easy.
+
+For the servers, they use =Mason=.
+I tried it, works well, so let's keep it for now.
+It makes it easy to install and run all kinds of LSPs without having to worry about enviroments.
+
+There are two more packages here:
+- =fidget= displays the status of the LSP, so that you can see if it is still scanning files. Pretty useful!
+- =neodev= is really only for lua package development. I probably will not use it, but keep it in for now.
+
+#+begin_src lua
+  use {
+    'neovim/nvim-lspconfig',
+    requires = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'j-hui/fidget.nvim',
+      'folke/neodev.nvim',
+    },
+  }
+#+end_src
+
+*** Vimtex
+It is not quite an LSP, but vimtex is very useful for writing tex files.
+When switching to this lua config, I threw away all of my previous configuration.
+It was not very extensive, but I should at some point have a look into how I had this configured
+
+#+begin_src lua
+  use 'lervag/vimtex'
+#+end_src
+
+** Completion
+Completions have always been black magic for me.
+They kept breaking or behaving in a weird way.
+This works reasonably well for now, so I will not touch it.
+
+#+begin_src lua
+  use { -- Autocompletion
+    'hrsh7th/nvim-cmp',
+    requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
+  }
+#+end_src
+
+** Treesitter
+It is awesome!
+Finally we can have syntax highlighting!
+
+Well, that was not the issue before, but treesitter actually allows way more sophisticated
+things such as ...
+Listen: =TreeSitter= is cool, use it. You can do stuff like _select that class for me_.
+
+#+begin_src lua
+  use { -- Highlight, edit, and navigate code
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      pcall(require('nvim-treesitter.install').update { with_sync = true })
+    end,
+  }
+
+  use { -- Additional text objects via treesitter
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    after = 'nvim-treesitter',
+  }
+
+#+end_src
+
+** Git
+I am not too sold on using git from within vim.
+More of the =Ctrl-Z= type of guy.
+But these plugins are definitively great and having the signs
+as diagnostic icons is useful even when I mostly use =git= from the command line.
+
+#+begin_src lua
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-rhubarb'
+  use 'lewis6991/gitsigns.nvim'
+#+end_src
+
+** Theming
+*** Theme
+My current favorite theme is [[https://github.com/sainnhe/gruvbox-material][gruvbox-material]].
+It is unexciting and very readable.
+Not a fan of the light variants, but the dark one is great.
+
+#+begin_src lua
+  use 'sainnhe/gruvbox-material'
+#+end_src
+
+*** Status Line
+I go with the kickstart default of [[https://github.com/nvim-lualine/lualine.nvim][lualine]] for now.
+Works well, no issues. Not that I ever had a lot with status lines.
+#+begin_src lua
+  use 'nvim-lualine/lualine.nvim'
+#+end_src
+
+*** Indentation guides
+This one is pretty nice: [[https://github.com/lukas-reineke/indent-blankline.nvim][indent-blankline]].
+Not strictly necessary, but also not annoying.
+It adds indendation lines even on blank lines.
+#+begin_src lua
+  use 'lukas-reineke/indent-blankline.nvim'
+#+end_src
+
+** Other minor things
+*** Comments
+Have not used it much so far, but looks pretty cool: [[https://github.com/numToStr/Comment.nvim][comment]].
+Integrates with [[Treesitter]]
+#+begin_src lua
+  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+#+end_src
+*** Tab (the key)
+Handles tabstops and shitwidths based on file types and contents.
+#+begin_src lua
+  use 'tpope/vim-sleuth'
+#+end_src
+
+** Telescope
+This one is a game changer!
+[[https://github.com/nvim-telescope/telescope.nvim][Telescope]] is just that great.
+The way I configured it, it gives me some (doom) emacs vibes, but it also
+works with the LSPs, so you can do things like show all definitions in
+a telescope "popup".
+[[https://github.com/nvim-telescope/telescope-fzf-native.nvim][fzf-native]] makes things faster
+
+#+begin_src lua
+  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+#+end_src
+
+** Bootstrapping
+=packer= does that for us.
+
+#+begin_src lua
+  if is_bootstrap then
+    require('packer').sync()
+  end
+end)
+#+end_src
+
+All we do here, is do emit a message, that =neovim= needs to be restarted afterwards to make sure
+everything is loaded properly.
+
+#+begin_src lua
+if is_bootstrap then
+  print '=================================='
+  print '    Plugins are being installed'
+  print '    Wait until Packer completes,'
+  print '       then restart nvim'
+  print '=================================='
+  return
+end
+#+end_src
+
+* Keybindings and General Settings
+In no particular order:
+
+I like to use the clipboard, so that you can select something externally and =p= into vim.
+Or the other way around: =yank= and then =<C-c>=.
+
+#+begin_src lua
+vim.o.clipboard = "unnamedplus"
+#+end_src
+
+I can not see anything if its not highlighted:
+#+begin_src lua
+vim.o.hlsearch = true
+#+end_src
+
+Line numbers are good, relative ones are better!
+#+begin_src lua
+vim.wo.number = true
+vim.o.relativenumber = true
+#+end_src
+
+Sometimes it is relaxing to select chunks of text using the mouse:
+#+begin_src lua
+vim.o.mouse = 'a'
+#+end_src
+
+From the manual:
+
+#+begin_quote
+Every wrapped line will continue visually indented (same amount of
+space as the beginning of that line), thus preserving horizontal blocks
+of text.
+#+end_quote
+
+#+begin_src lua
+-- Enable break indent
+vim.o.breakindent = true
+#+end_src
+
+Yes, we want the undo feature
+#+begin_src lua
+vim.o.undofile = true
+#+end_src
+
+Default to case-*in*sensitive searching.
+Can still search case-sensitive using =/C=.
+
+#+begin_src lua
+vim.o.ignorecase = true
+vim.o.smartcase = true
+#+end_src
+
+Decrease update time
+#+begin_src lua
+vim.o.updatetime = 250
+vim.wo.signcolumn = 'yes'
+
+#+end_src
+
+Load color scheme:
+#+begin_src lua
+vim.o.termguicolors = true
+vim.cmd [[colorscheme gruvbox-material]]
+#+end_src
+
+Set completeopt to have a better completion experience
+#+begin_src lua
+vim.o.completeopt = 'menuone,noselect'
+#+end_src
+
+Set <space> as the leader key
+*NOTE:* Must happen before plugins are required (otherwise wrong leader will be used)
+I like this ever since I tried =doom emacs=. It is just super comfy, because you can hit it with either hand.
+
+#+begin_src lua
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+#+end_src
+
+Faster panel switching:
+#+begin_src lua
+vim.keymap.set('n', '<C-j>', '<C-W>j', { silent = true })
+vim.keymap.set('n', '<C-k>', '<C-W>k', { silent = true })
+vim.keymap.set('n', '<C-l>', '<C-W>l', { silent = true })
+vim.keymap.set('n', '<C-h>', '<C-W>h', { silent = true })
+#+end_src
+
+Normal mode always at reach:
+#+begin_src lua
+vim.keymap.set({'v', 'i'}, 'jk', '<ESC>', { silent = true })
+#+end_src
+
+Remap for dealing with word wrap (form kickstart).
+#+begin_src lua
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+#+end_src
+
+Highlight on yank.
+Not sure if I need that, will test.
+#+begin_src lua
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = '*',
+})
+#+end_src
+
+* Package settings
+
+Load status line with the correct theme
+#+begin_src lua
+require('lualine').setup {
+  options = {
+    icons_enabled = false,
+    theme = 'gruvbox-material',
+    component_separators = '|',
+    section_separators = '',
+  },
+}
+#+end_src
+
+Load =Comment=
+#+begin_src lua
+require('Comment').setup()
+#+end_src
+
+Set another char to make the blanklines less offensive:
+#+begin_src lua
+require('indent_blankline').setup {
+  char = '┊',
+  show_trailing_blankline_indent = false,
+}
+#+end_src
+
+Set chars to use for =gitsign=.
+These are not exactly flashy, which is great.
+
+#+begin_src lua
+require('gitsigns').setup {
+  signs = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = '_' },
+    topdelete = { text = '‾' },
+    changedelete = { text = '~' },
+  },
+}
+#+end_src
+
+#+begin_src lua
+-- Turn on lsp status information
+require('fidget').setup()
+#+end_src
+
+#+begin_src lua
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+  },
+}
+#+end_src
+** TODO Telescope
+#+begin_src lua
+require('telescope').setup {
+  defaults = {
+    mappings = {
+      i = {
+        ['<C-u>'] = false,
+        ['<C-d>'] = false,
+      },
+    },
+  },
+}
+
+-- Enable telescope fzf native, if installed
+pcall(require('telescope').load_extension, 'fzf')
+
+-- See `:help telescope.builtin`
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader>bb', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>/', function()
+  -- You can pass additional configuration to telescope to change theme, layout, etc.
+  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+    winblend = 10,
+    previewer = false,
+  })
+end, { desc = '[/] Fuzzily search in current buffer]' })
+
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+#+end_src
+
+** TODO TreeSitter
+#+begin_src lua
+-- [[ Configure Treesitter ]]
+-- See `:help nvim-treesitter`
+require('nvim-treesitter.configs').setup {
+  -- Add languages to be installed here that you want installed for treesitter
+  ensure_installed = { 'c', 'cpp', 'lua', 'python', 'typescript', 'help', 'vim', 'latex', 'bibtex', 'bash' },
+
+  highlight = { enable = true },
+  indent = { enable = true, disable = { 'python' } },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = '<c-space>',
+      node_incremental = '<c-space>',
+      scope_incremental = '<c-s>',
+      node_decremental = '<c-backspace>',
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ['aa'] = '@parameter.outer',
+        ['ia'] = '@parameter.inner',
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
+      },
+      goto_next_end = {
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
+      },
+      goto_previous_start = {
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
+      },
+      goto_previous_end = {
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ['<leader>a'] = '@parameter.inner',
+      },
+      swap_previous = {
+        ['<leader>A'] = '@parameter.inner',
+      },
+    },
+  },
+}
+#+end_src
+
+** LSP
+Keymaps for Diagnostics.
+To be honest, I rarely use them.
+#+begin_src lua
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+#+end_src
+
+The good stuff:
+~on_attach~ is always run when an LSP connects to a particular buffer.
+From kickstart:
+#+begin_quote
+NOTE: Remember that lua is a real programming language, and as such it is possible
+  -- to define small helper and utility functions so you don't have to repeat yourself
+  -- many times.
+  -- In this case, we create a function that lets us more easily define mappings specific
+  -- for LSP related items. It sets the mode, buffer and description for us each time.
+#+end_quote
+
+#+begin_src lua
+local on_attach = function(_, bufnr)
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+ #+end_src
+
+ The most important keybindings:
+ #+begin_src lua
+  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  #+end_src
+
+  I know, =K= is kind of the canonical key, but then =<C-K>= interferes with the panel switching...
+  #+begin_src lua
+  nmap('S', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-s>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  #+end_src
+
+  Some more keybindings.
+  I especially like =gD= to go to the definition of the object under cursor.
+
+  #+begin_src lua
+  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  nmap('<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, '[W]orkspace [L]ist Folders')
+  #+end_src
+
+ Format Code.
+ This is not really needed or finished as we mostly run [[https://github.com/psf/black][black]] and
+ I haven't set the LSP up for that yet.
+
+  #+begin_src lua
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    vim.lsp.buf.format()
+  end, { desc = 'Format current buffer with LSP' })
+end
+#+end_src
+
+** Servers
+Define servers and automatically install them using mason.
+For now, this is very bare-bones: Only (preconfigured) =lua= and =python=.
+
+#+begin_src lua
+local servers = {
+  pyright = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        useLibraryCodeForTypes = true
+      }
+    }
+  },
+  sumneko_lua = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
+    },
+  },
+}
+
+-- Setup neovim lua configuration
+require('neodev').setup()
+--
+-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+-- Setup mason so it can manage external tooling
+require('mason').setup()
+
+-- Ensure the servers above are installed
+local mason_lspconfig = require 'mason-lspconfig'
+
+mason_lspconfig.setup {
+  ensure_installed = vim.tbl_keys(servers),
+}
+
+mason_lspconfig.setup_handlers {
+  function(server_name)
+    require('lspconfig')[server_name].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers[server_name],
+    }
+  end,
+}
+#+end_src
+
