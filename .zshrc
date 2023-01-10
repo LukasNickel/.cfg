@@ -131,3 +131,13 @@ source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Allow Ctrl-z to toggle between suspend and resume
+function Resume { 
+  fg 
+  zle push-input 
+  BUFFER="" 
+  zle accept-line
+} 
+zle -N Resume
+bindkey "^Z" Resume
