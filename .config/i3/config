@@ -233,3 +233,6 @@ for_window [class="Thunderbird" instance="Msgcompose" window_role="Msgcompose"] 
 # noah says no borders
 hide_edge_borders smart
 default_border pixel 1
+
+# noah says compose fixes us
+exec_always setxkbmap -layout us -option "shift:both_capslock" -option "compose:caps"
