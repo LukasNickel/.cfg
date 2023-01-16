@@ -67,3 +67,5 @@
 (package! org-download)
 
 (package! ox-hugo)
+
+(package! elfeed)
