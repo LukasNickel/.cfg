@@ -69,3 +69,7 @@
 (package! ox-hugo)
 
 (package! elfeed)
+(package! elfeed-org)
+(package! elfeed-tube)
+(package! elfeed-tube-mpv)
+(package! mpv)
