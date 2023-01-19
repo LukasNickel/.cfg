@@ -337,6 +337,8 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+  texlab = {
+  },
 }
 
 -- Setup neovim lua configuration

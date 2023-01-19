@@ -2,7 +2,7 @@
 :ID:       e46b94ec-5171-46b4-8747-ea63433c36a6
 :END:
 #+title: neovim
-#+filetags: :lsp:babel:config:vim:lua:
+#+filetags: :vim:config:lsp:babel:lua:
 #+options: toc:1
 #+property: header-args :exports code :tangle "~/.config/nvim/init.lua"
 
@@ -586,6 +586,8 @@ local servers = {
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
     },
+  },
+  texlab = {
   },
 }
 
