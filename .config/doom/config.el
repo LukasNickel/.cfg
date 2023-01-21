@@ -262,7 +262,9 @@
 (use-package! elfeed-org
     :after elfeed
     :init
-    (setq rmh-elfeed-org-files (list "~/Nextcloud/elfeed.org")))
+    (setq rmh-elfeed-org-files (list "~/Nextcloud/org/elfeed.org"))
+    )
+(elfeed-org)
 
 (use-package elfeed-tube
   :ensure t ;; or :straight t
@@ -288,3 +290,16 @@
 
 ; refresh feeds every 2 hours
 (run-at-time nil (* 2 60 60) #'elfeed-update)
+(setq elfeed-db-directory "~/Nextcloud/stuff_to_sync")
+
+; https://sqrtminusone.xyz/posts/2021-09-07-emms/
+(require 'emms-setup)
+(emms-all)
+(setq emms-source-file-default-directory (expand-file-name "~/Music"))
+(setq emms-player-mpd-music-directory (expand-file-name "~/Music"))
+(setq emms-player-mpd-server-name "localhost")
+(setq emms-player-mpd-server-port "6600")
+(add-to-list 'emms-info-functions 'emms-info-mpd)
+(add-to-list 'emms-player-list 'emms-player-mpd)
+(emms-player-mpd-connect)
+(add-hook 'emms-playlist-cleared-hook 'emms-player-mpd-clear)
