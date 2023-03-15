@@ -57,8 +57,13 @@
 (package! org-super-agenda)
 (package! org-noter)
 
+(package! org-modern)
 (package! org-fragtog)
 (package! org-appear)
+(package! org-glossary
+  :recipe (:host github :repo "tecosaur/org-glossary"))
+(package! org-modern-indent
+  :recipe (:host github :repo "jdtsmith/org-modern-indent"))
 
 (package! focus)
 (package! centered-window)
@@ -74,3 +79,5 @@
 (package! elfeed-tube-mpv)
 (package! mpv)
 (package! emms)
+
+(package! emacsql-sqlite3)

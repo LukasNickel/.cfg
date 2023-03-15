@@ -13,7 +13,7 @@
 (setq user-full-name "Lukas Nickel"
       user-mail-address "lukasnickel@outlook.de")
 
-(ispell-change-dictionary "en_US" t)
+; (ispell-change-dictionary "en_US" t)
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -40,7 +40,10 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org"
       org-roam-directory "~/org"
-      org-agenda-files (directory-files-recursively "~/org/" "\\.org$"))
+      org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
+      org-roam-db-location "~/org/org-roam.db"
+      org-roam-database-connector 'sqlite3
+      )
 
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
@@ -67,10 +70,16 @@
 
 ;;Loads of org-mode related
 ;;Easier use of latex
+(use-package! org-glossary
+  :hook (org-mode . org-glossary-mode))
+
+(use-package! org-modern-indent
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+
 (use-package! org-fragtog
   :after org
   :hook (org-mode . org-fragtog-mode))
-
 (use-package! org-appear
   :after org
   :hook (org-mode . org-appear-mode)
@@ -150,6 +159,7 @@
          org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
          org-ref-notes-directory "~/org/references/notes/"
          org-ref-notes-function 'orb-edit-notes
+         org-ref-default-ref-type "cref"
          org-ref-pdf-directory "~/org/references/"))
 (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
 
@@ -186,7 +196,8 @@
 
 
 (with-eval-after-load 'org
-  (plist-put org-format-latex-options :background 'default))
+  (plist-put org-format-latex-options :background 'default)
+  (setq org-export-allow-bind-keywords t))
 
 ;; Why though?
 (define-minor-mode prot/variable-pitch-mode
@@ -202,9 +213,32 @@
 ;; This should make things more uniform everywhere
  ;; Use minted
 (add-to-list 'org-latex-packages-alist '("outputdir=build" "minted"))
+(add-to-list 'org-latex-packages-alist '("" "cleveref"))
 (setq org-latex-listings 'minted)
+(add-to-list 'exec-path "/home/lukas/.local/texlive/2022/bin/x86_64-linux")
+(setq org-latex-compiler "lualatex")
+(setq org-publish-project-alist
+  '(
+    ("website-content"
+     :base-directory "~/org/website"
+     :base-extension "org"
+     :publishing-directory "~/Nextcloud/website"
+     :recursive t
+     :publishing-function org-html-publish-to-html
+     :headline-levels 3
+     :auto-preamble t)
+    ("website-static"
+     :base-directory "~/org/website"
+     :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\"
+     :publishing-directory "~/public_html/"
+     :recursive t
+     :publishing-function org-publish-attachment)
+    ("website" :components ("website-content" "website-static"))
+    ))
 
-(setq org-latex-pdf-process (list "latexmk -f -pdf %f"))
+
+(setq org-latex-pdf-process (list "latexmk -f %f"))
+;("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f")
 (setq org-babel-python-command "/home/lukas/.local/anaconda3/bin/python")
 
 ; org roam bindings
