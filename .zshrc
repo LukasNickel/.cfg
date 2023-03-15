@@ -23,6 +23,7 @@ source $HOME/.local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # ZSH options
 setopt EXTENDED_HISTORY
+setopt share_history
 export HISTSIZE=10000
 export SAVEHIST=10000
 HISTFILE=~/.zsh_history
@@ -30,7 +31,6 @@ HIST_STAMPS="yyyy-mm-dd"
 bindkey '^[[H' beginning-of-line
 bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
-
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -141,3 +141,22 @@ function Resume {
 } 
 zle -N Resume
 bindkey "^Z" Resume
+
+
+# FZF ---------------------------------------------------
+if ! [ -d "${HOME}/.fzf" ]; then
+    zshrcmsg "Installing FZF"
+    git clone --depth 1 \
+        "https://github.com/junegunn/fzf.git" \
+        "${HOME}/.fzf"
+    "${HOME}/.fzf/install" --all --no-{ba,fi}sh --no-update-rc
+fi
+. "${HOME}/.fzf.zsh"
+export FZF_TMUX=0
+export FZF_TMUX_HEIGHT=10
+export FZF_DEFAULT_COMMAND='fd --hidden'
+export FZF_DEFAULT_OPTS='--no-bold --reverse'
+export FZF_CTRL_T_COMMAND=fd
+export FZF_ALT_C_COMMAND='fd --type d'
+export FZF_ALT_C_OPTS='--preview "exa --color=always {}"'
+# -------------------------------------------------------
