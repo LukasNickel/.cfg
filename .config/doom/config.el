@@ -284,12 +284,9 @@
 ; https://takeonrules.com/2023/04/09/dig-my-grave-leveraging-the-triple-back-tick-in-org-mode/
 (defvar dig-my-grave/templates-alist/org-mode
   '(("Bash" . "#+begin_src bash :results scalar replace :exports both :tangle yes\n#+end_src")
-    ("Blockquote" . tempel-insert-blockquote_block)
-    ("Details and Summary" . "#+begin_details\n#+begin_summary\n\n#+end_summary\n#+end_details")
     ("Emacs Lisp" . "#+begin_src emacs-lisp\n#+end_src")
     ("Org Structure" . org-insert-structure-template)
-    ("Plant UML" . "#+begin_src plantuml\n@startuml\n!theme amiga\n\n@enduml\n#+end_src")
-    ("Python" . "#+begin_src python\n#+end_src")
+    ("Python" . "#+begin_src python :tangle yes exports output \n#+end_src")
     ("Update" . tempel-insert-update_block))
   "A list of `cons' cells with `car' as the label and `cdr' as
  the value that we'll insert.  Used as the collection for the
