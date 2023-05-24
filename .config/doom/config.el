@@ -388,13 +388,18 @@
 (setq elfeed-db-directory "~/Nextcloud/stuff_to_sync")
 
 ; https://sqrtminusone.xyz/posts/2021-09-07-emms/
-(require 'emms-setup)
-(emms-all)
-(setq emms-source-file-default-directory (expand-file-name "~/Music"))
-(setq emms-player-mpd-music-directory (expand-file-name "~/Music"))
-(setq emms-player-mpd-server-name "localhost")
-(setq emms-player-mpd-server-port "6600")
-(add-to-list 'emms-info-functions 'emms-info-mpd)
-(add-to-list 'emms-player-list 'emms-player-mpd)
-(emms-player-mpd-connect)
-(add-hook 'emms-playlist-cleared-hook 'emms-player-mpd-clear)
+(use-package emms-setup)
+(use-package emms
+  :after emms-setup
+  :config
+  (emms-all)
+  (setq emms-source-file-default-directory "~/Nextcloud/music/")
+  (setq emms-player-mpd-music-directory "~/Nextcloud/music")
+  (setq emms-player-mpd-server-name "localhost")
+  (setq emms-player-mpd-server-port "6600")
+  (add-to-list 'emms-info-functions 'emms-info-mpd)
+  (add-to-list 'emms-player-list 'emms-player-mpd)
+  (emms-player-mpd-connect)
+  (add-hook 'emms-playlist-cleared-hook 'emms-player-mpd-clear)
+
+)
