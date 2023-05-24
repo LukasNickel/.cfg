@@ -73,10 +73,6 @@
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode))
 
-(use-package! org-modern-indent
-  :config
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
-
 (use-package! org-fragtog
   :after org
   :hook (org-mode . org-fragtog-mode))
@@ -87,6 +83,12 @@
            org-appear-autolinks t
            org-appear-autoentities t
            org-appear-autosubmarkers t ))
+;;
+;; Some styling
+(use-package! org-modern-indent
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+(with-eval-after-load 'org (global-org-modern-mode))
 
 (use-package! org-roam
   :after org
