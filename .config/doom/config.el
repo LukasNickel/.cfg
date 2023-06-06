@@ -26,9 +26,9 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "Fira Code" :size 15)
-      doom-variable-pitch-font (font-spec :family "Fira Code" :size 15)
-      doom-big-font (font-spec :family "Fira Code" :size 24))
+(setq doom-font (font-spec :family "BerkeleyMono" :size 15)
+      doom-variable-pitch-font (font-spec :family "BerkeleyMono" :size 15)
+      doom-big-font (font-spec :family "BerkeleyMono" :size 24))
 
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
