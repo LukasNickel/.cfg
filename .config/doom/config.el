@@ -238,8 +238,15 @@
     ("website" :components ("website-content" "website-static"))
     ))
 
+(defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
+  (unless pub-dir
+    (setq pub-dir "build")
+    (unless (file-directory-p pub-dir)
+      (make-directory pub-dir)))
+  (apply orig-fun extension subtreep pub-dir nil))
+(advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
 
-(setq org-latex-pdf-process (list "latexmk -f %f"))
+(setq org-latex-pdf-process (list "latexmk -f %f -output-directory=%o"))
 ;("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f")
 (setq org-babel-python-command "/home/lukas/.local/anaconda3/bin/python")
 
