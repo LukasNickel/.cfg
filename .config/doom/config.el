@@ -42,6 +42,7 @@
       org-roam-directory "~/org"
       org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
       org-roam-db-location "~/org/org-roam.db"
+      org-roam-database-connector 'sqlite3
       )
 
 
