@@ -42,7 +42,6 @@
       org-roam-directory "~/org"
       org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
       org-roam-db-location "~/org/org-roam.db"
-      org-roam-database-connector 'sqlite3
       )
 
 
@@ -73,16 +72,6 @@
 (use-package! org-glossary
   :hook (org-mode . org-glossary-mode))
 
-(use-package! org-fragtog
-  :after org
-  :hook (org-mode . org-fragtog-mode))
-(use-package! org-appear
-  :after org
-  :hook (org-mode . org-appear-mode)
-  :config (setq
-           org-appear-autolinks t
-           org-appear-autoentities t
-           org-appear-autosubmarkers t ))
 ;;
 ;; Some styling
 (use-package! org-modern-indent
@@ -214,11 +203,11 @@
 ;; Use latexmk instead of always pdflatex
 ;; This should make things more uniform everywhere
  ;; Use minted
+(map! :map cdlatex-mode-map :i "TAB" #'cdlatex-tab)
 (add-to-list 'org-latex-packages-alist '("outputdir=build" "minted"))
 (add-to-list 'org-latex-packages-alist '("" "cleveref"))
 (setq org-latex-listings 'minted)
 (add-to-list 'exec-path "/home/lukas/.local/texlive/2022/bin/x86_64-linux")
-(setq org-latex-compiler "lualatex")
 (setq org-publish-project-alist
   '(
     ("website-content"
@@ -246,6 +235,7 @@
   (apply orig-fun extension subtreep pub-dir nil))
 (advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
 
+(setq org-latex-compiler "lualatex")
 (setq org-latex-pdf-process (list "latexmk -f %f -output-directory=%o"))
 ;("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f")
 (setq org-babel-python-command "/home/lukas/.local/anaconda3/bin/python")

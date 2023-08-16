@@ -58,7 +58,6 @@
 (package! org-noter)
 
 (package! org-modern)
-(package! org-fragtog)
 (package! org-appear)
 (package! org-glossary
   :recipe (:host github :repo "tecosaur/org-glossary"))
