@@ -80,3 +80,4 @@
 (package! emms)
 
 (package! emacsql-sqlite3)
+(package! snakemake-mode)
