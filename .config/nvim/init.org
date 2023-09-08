@@ -54,7 +54,6 @@ There are two more packages here:
     requires = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'j-hui/fidget.nvim',
       'folke/neodev.nvim',
     },
   }
@@ -153,7 +152,10 @@ Handles tabstops and shitwidths based on file types and contents.
 #+begin_src lua
   use 'tpope/vim-sleuth'
 #+end_src
-
+*** snakemake
+#+begin_src lua
+  use 'raivivek/vim-snakemake'
+#+end_src
 ** Telescope
 This one is a game changer!
 [[https://github.com/nvim-telescope/telescope.nvim][Telescope]] is just that great.
@@ -345,10 +347,6 @@ require('gitsigns').setup {
 }
 #+end_src
 
-#+begin_src lua
--- Turn on lsp status information
-require('fidget').setup()
-#+end_src
 
 #+begin_src lua
 local cmp = require 'cmp'
@@ -580,12 +578,6 @@ local servers = {
         useLibraryCodeForTypes = true
       }
     }
-  },
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
   },
   texlab = {
   },

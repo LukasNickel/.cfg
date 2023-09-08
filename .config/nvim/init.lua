@@ -15,7 +15,6 @@ require('packer').startup(function(use)
     requires = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'j-hui/fidget.nvim',
       'folke/neodev.nvim',
     },
   }
@@ -52,6 +51,8 @@ require('packer').startup(function(use)
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
 
   use 'tpope/vim-sleuth'
+
+  use 'raivivek/vim-snakemake'
 
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
@@ -143,9 +144,6 @@ require('gitsigns').setup {
     changedelete = { text = '~' },
   },
 }
-
--- Turn on lsp status information
-require('fidget').setup()
 
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
@@ -330,12 +328,6 @@ local servers = {
         useLibraryCodeForTypes = true
       }
     }
-  },
-  sumneko_lua = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
   },
   texlab = {
   },
