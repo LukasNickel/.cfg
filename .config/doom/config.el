@@ -42,7 +42,7 @@
       org-roam-directory "~/org"
       org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
       org-roam-db-location "~/org/org-roam.db"
-      org-roam-database-connector 'sqlite3
+;      org-roam-database-connector 'sqlite3
       )
 
 
@@ -148,6 +148,7 @@
     (setq
          org-ref-completion-library 'org-ref-ivy-cite
          org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+         ; TODO This is not relevant anymore but might be named differently?
          org-ref-note-title-format "* %y - %t\n :PROPERTIES:\n  :Custom_ID: %k\n  :NOTER_DOCUMENT: %F\n :ROAM_KEY: cite:%k\n  :AUTHOR: %9a\n  :JOURNAL: %j\n  :YEAR: %y\n  :VOLUME: %v\n  :PAGES: %p\n  :DOI: %D\n  :URL: %U\n :END:\n\n"
          org-ref-notes-directory "~/org/references/notes/"
          org-ref-notes-function 'orb-edit-notes
@@ -205,9 +206,15 @@
 ;; This should make things more uniform everywhere
  ;; Use minted
 (map! :map cdlatex-mode-map :i "TAB" #'cdlatex-tab)
-(add-to-list 'org-latex-packages-alist '("outputdir=build" "minted"))
+;(add-to-list 'org-latex-packages-alist '("outputdir=build" "minted"))
 (add-to-list 'org-latex-packages-alist '("" "cleveref"))
-(setq org-latex-listings 'minted)
+(use-package! engrave-faces
+  :after ox-latex
+  :config
+  (add-to-list 'org-latex-engraved-options '("linenos" "true"))
+  (setq org-latex-engraved-theme "t")
+  )
+(setq org-latex-listings 'engraved)
 (add-to-list 'exec-path "/home/lukas/.local/texlive/2022/bin/x86_64-linux")
 (setq org-publish-project-alist
   '(

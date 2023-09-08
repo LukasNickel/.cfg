@@ -79,5 +79,6 @@
 (package! mpv)
 (package! emms)
 
-(package! emacsql-sqlite3)
+;(package! emacsql-sqlite3)
 (package! snakemake-mode)
+(package! engrave-faces)
