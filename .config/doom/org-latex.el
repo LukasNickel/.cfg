@@ -12,7 +12,7 @@
   (setq org-latex-engraved-theme "t")
   )
 ;;(setq org-latex-src-block-backend 'engraved)
-(add-to-list 'exec-path "/home/lukas/.local/texlive/2022/bin/x86_64-linux")
+(add-to-list 'exec-path "/home/lukas/.local/texlive/2023/bin/x86_64-linux")
 (defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
   (unless pub-dir
     (setq pub-dir "build")
@@ -36,10 +36,10 @@
              )
 (add-to-list 'org-latex-classes
              '("diss"
-               "\\documentclass{memoir}
+               "\\documentclass[a4paper, 10pt, twoside, onecolumn, openright]{memoir}
 [NO-DEFAULT-PACKAGES]
 [NO-PACKAGES]
-\\input{~/Nextcloud/diss/header.tex}"
+\\input{~/Nextcloud/uni_shared/PHD/header.tex}"
                ("\\part{%s}" . "\\part*{%s}")
                ("\\chapter{%s}" . "\\chapter*{%s}")
                ("\\section{%s}" . "\\section*{%s}")
