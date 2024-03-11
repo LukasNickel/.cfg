@@ -150,10 +150,6 @@
     (call-interactively #'org-self-insert-command)))
 
 
-
-
-
-
 (setq fancy-splash-image "~/.config/doom/blackhole.png")
 ;; true transparency
 (set-frame-parameter nil 'alpha-background 100)
