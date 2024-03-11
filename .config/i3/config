@@ -28,6 +28,7 @@ font pango: sans 11
 #exec --no-startup-id ~/.screenlayout/uni_dock.sh
 exec --no-startup-id dockd --daemon
 exec --no-startup-id nextcloud
+exec keepassxc
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
