@@ -36,7 +36,7 @@
              )
 (add-to-list 'org-latex-classes
              '("diss"
-               "\\documentclass[a4paper, 10pt, twoside, onecolumn, openright]{memoir}
+               "\\documentclass[a4paper, 11pt, twoside, onecolumn, openright]{memoir}
 [NO-DEFAULT-PACKAGES]
 \\usepackage[giveninits=true,urldate=iso,firstinits=true,maxbibnames=5]{biblatex}
 \\addbibresource{/home/lukas/org/references/library.bib}
