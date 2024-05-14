@@ -55,12 +55,12 @@ alias free='free -m'                      # show sizes in MB
 alias vim="nvim"
 alias du="du -h"
 
-# Changing "ls" to "exa"
-alias ls='exa -al --color=always --group-directories-first' # my preferred listing
-alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll='exa -l --color=always --group-directories-first'  # long format
-alias lt='exa -aT --color=always --group-directories-first' # tree listing
-alias l.='exa -a | egrep "^\."'
+# Changing "ls" to "eza"
+alias ls='eza -al --color=always --group-directories-first' # my preferred listing
+alias la='eza -a --color=always --group-directories-first'  # all files and dirs
+alias ll='eza -l --color=always --group-directories-first'  # long format
+alias lt='eza -aT --color=always --group-directories-first' # tree listing
+alias l.='eza -a | egrep "^\."'
 
 # git
 alias gitgraph="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
@@ -133,21 +133,11 @@ function Resume {
 zle -N Resume
 bindkey "^Z" Resume
 
-
-# FZF ---------------------------------------------------
-if ! [ -d "${HOME}/.fzf" ]; then
-    zshrcmsg "Installing FZF"
-    git clone --depth 1 \
-        "https://github.com/junegunn/fzf.git" \
-        "${HOME}/.fzf"
-    "${HOME}/.fzf/install" --all --no-{ba,fi}sh --no-update-rc
-fi
-. "${HOME}/.fzf.zsh"
 export FZF_TMUX=0
 export FZF_TMUX_HEIGHT=10
 export FZF_DEFAULT_COMMAND='fd --hidden'
 export FZF_DEFAULT_OPTS='--no-bold --reverse'
 export FZF_CTRL_T_COMMAND=fd
 export FZF_ALT_C_COMMAND='fd --type d'
-export FZF_ALT_C_OPTS='--preview "exa --color=always {}"'
+export FZF_ALT_C_OPTS='--preview "eza --color=always {}"'
 # -------------------------------------------------------
