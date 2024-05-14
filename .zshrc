@@ -16,11 +16,6 @@ function open () {
 	nohup xdg-open $1 < /dev/null 2>/dev/null >/dev/null &!
 }
 
-# Plugins
-source $HOME/.local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# source $HOME/.local/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source $HOME/.local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 # ZSH options
 setopt EXTENDED_HISTORY
 setopt share_history
@@ -38,10 +33,6 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
-
-
-# https://github.com/rupa/z
-. ~/.config/z.sh
 
 # python
 alias pytest='pytest -v --lf'
