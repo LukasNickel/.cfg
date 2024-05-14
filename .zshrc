@@ -37,22 +37,14 @@ fi
 # python
 alias pytest='pytest -v --lf'
 
-# texlive setup
-export PATH="$HOME/.local/texlive/2023/bin/x86_64-linux:$PATH"
-
 # navigation
 alias ..='cd ..' 
 alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../..'
-alias .5='cd ../../../..'
-alias .6='cd ../../../../..'
 
 # file manipulation
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
-alias vim="nvim"
 alias du="du -h"
 
 # Changing "ls" to "eza"
