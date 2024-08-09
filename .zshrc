@@ -47,7 +47,7 @@ fi
 alias pytest='pytest -v --lf'
 
 # texlive setup
-export PATH="$HOME/.local/texlive/2023/bin/x86_64-linux:$PATH"
+export PATH="$HOME/.local/texlive/2024/bin/x86_64-linux:$PATH"
 
 # navigation
 alias ..='cd ..' 
@@ -160,3 +160,6 @@ export FZF_CTRL_T_COMMAND=fd
 export FZF_ALT_C_COMMAND='fd --type d'
 export FZF_ALT_C_OPTS='--preview "exa --color=always {}"'
 # -------------------------------------------------------
+
+# Created by `pipx` on 2024-06-09 15:11:45
+export PATH="$PATH:/home/lukas/.local/bin"
